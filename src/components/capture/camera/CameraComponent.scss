@@ -1,0 +1,22 @@
+.container {
+    height: 100%;
+    width: 100%;
+}
+.camera {
+    height: 100%;
+    width: 100%;
+}
+.buttonContainer {
+    height: 100%;
+    width: 100%;
+}
+.button {
+    flex: 1;
+    justify-content: flex-end;
+    align-items: center;
+}
+.text {
+    font-size: x-small;
+    margin-bottom: 10px;
+    color: white;
+}
