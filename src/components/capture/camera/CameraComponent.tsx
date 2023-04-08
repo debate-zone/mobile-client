@@ -1,10 +1,11 @@
 import {Button, StyleSheet, TouchableOpacity, View, Text, Image, Animated} from "react-native";
 import {Camera, CameraType, FaceDetectionResult} from "expo-camera";
 import React, {useState} from "react";
-import * as FaceDetector from 'expo-face-detector';
 import {useAssets} from "expo-asset";
+import * as FaceDetector from 'expo-face-detector';
+import styles from './CameraComponent.module.scss';
 
-const styles = StyleSheet.create({
+/*const styles = StyleSheet.create({
     container: {
         height: '100%',
         width: '100%',
@@ -27,7 +28,8 @@ const styles = StyleSheet.create({
         marginBottom: 10,
         color: 'white',
     }
-});
+});*/
+
 
 type Face = {
     bottomMouthPosition: { x: number, y: number },
