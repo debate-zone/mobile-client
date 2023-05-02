@@ -30,24 +30,48 @@ const PoliticalCompass: React.FC = () => {
     }
 
     cells.push(
-      <TouchableOpacity style={[styles.button1, styles.buttonContainer]} key="button1">
-        <Text style={styles.buttonText}>Nationalism</Text>
+      <TouchableOpacity style={[styles.libertarian, styles.buttonContainer]} key="Libertarian">
+        <Text style={styles.buttonText}>Libertarian</Text>
       </TouchableOpacity>,
-      <TouchableOpacity style={[styles.button2, styles.buttonContainer]} key="button2">
+      <TouchableOpacity style={[styles.authoritarianism, styles.buttonContainer]} key="Authoritarianism">
         <Text style={styles.buttonText}>Authoritarianism</Text>
       </TouchableOpacity>,
-      <TouchableOpacity style={[styles.button3, styles.buttonContainer]} key="button3">
-        <Text style={styles.buttonText}>Ultra-Capitalism</Text>
+      <TouchableOpacity style={[styles.right, styles.buttonContainer]} key="Right">
+        <Text style={styles.buttonText}>Right</Text>
       </TouchableOpacity>,
-      <TouchableOpacity style={[styles.button4, styles.buttonContainer]} key="button4">
-        <Text style={styles.buttonText}>Social Democratic </Text>
+      <TouchableOpacity style={[styles.left, styles.buttonContainer]} key="Left">
+        <Text style={styles.buttonText}>Left</Text>
+      </TouchableOpacity>,
+      <TouchableOpacity style={[styles.socialism, styles.buttonContainer]} key="Socialism">
+        <Text style={styles.buttonText}>Socialism</Text>
+      </TouchableOpacity>,
+      <TouchableOpacity style={[styles.liberalism, styles.buttonContainer]} key="Liberalism">
+        <Text style={styles.buttonText}>Liberalism</Text>
+      </TouchableOpacity>,
+      <TouchableOpacity style={[styles.conservatism, styles.buttonContainer]} key="Conservatism">
+        <Text style={styles.buttonText}>Conservatism</Text>
+      </TouchableOpacity>,
+      <TouchableOpacity style={[styles.ecologism, styles.buttonContainer]} key="Ecologism">
+        <Text style={styles.buttonText}>Ecologism</Text>
+      </TouchableOpacity>,
+      <TouchableOpacity style={[styles.nationalism, styles.buttonContainer]} key="Nationalism">
+        <Text style={styles.buttonText}>Nationalism</Text>
+      </TouchableOpacity>,
+      <TouchableOpacity style={[styles.socialDemocracy, styles.buttonContainer]} key="Social democracy">
+        <Text style={styles.buttonText}>Social Democracy</Text>
       </TouchableOpacity>,
     );
-
     return cells;
   };
-
-  return <View style={styles.grid}>{renderCells()}</View>;
+  
+  return (
+    <View style={styles.container}>
+      <View style={styles.grid}>{renderCells()}</View>
+      <TouchableOpacity style={styles.skipButton}>
+        <Text style={styles.skipText}>Skip</Text>
+      </TouchableOpacity>
+    </View>
+  )
 };
 
 const styles = StyleSheet.create({
@@ -106,35 +130,80 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     justifyContent: 'center',
     alignItems: 'center',
-    minWidth: 100,
+    minWidth: 40,
     height: 25,
+    paddingLeft:10,
+    paddingRight:10,
     backgroundColor: '#FFFFFFDB',
     '&:hover': {
       backgroundColor: 'blue',
-  }
-  },
-  button1: {
-    left: 250,
-    top: 100,
-  },
-  button2: {
-    left: 100,
-    top: 150,
-  },
-  button3: {
-    left: 150,
-    top: 120,
-  },
-  button4: {
-    left: 50,
-    top: 180,
+    }
   },
   buttonText: {
     color: '#D88E13',
     fontWeight: 'bold',
     textAlign: 'center',
     alignItems: 'center',
-  }
+  },
+  skipButton: {
+     position: 'absolute',
+    bottom: 0,
+    right: 180,
+    paddingVertical: 10,
+    paddingHorizontal: 4,
+    underLine: true,
+    color: '#14213D',
+    borderBottomWidth: 2
+  },
+  skipText: {
+   color: '#14213D',
+    fontWeight: 'bold',
+  },
+  container: {
+    top:50,
+    flex: 1,
+    backgroundColor: 'white',
+  },
+  libertarian: {
+    left: 153,
+    top: 415,
+  },
+  authoritarianism: {
+    left: 135,
+    top: 0,
+  },
+  right: {
+    left: 330,
+    top: 200,
+  },
+  left: {
+    left: 5,
+    top: 200,
+  },
+  socialism:{
+    left: 40,
+    top: 60,
+  },
+  liberalism:{
+    left: 200,
+    top: 300,
+  },
+  conservatism:{
+    left: 200,
+    top: 190,
+  },
+  ecologism:{
+    left: 20,
+    top: 350,
+  },
+  nationalism:{
+    left: 260,
+    top: 70,
+  },
+  socialDemocracy:{
+    left: 50,
+    top: 190,
+  },
 });
 
 export default PoliticalCompass;
