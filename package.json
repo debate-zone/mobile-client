@@ -29,7 +29,8 @@
     "typescript": "^4.9.4"
   },
   "devDependencies": {
-    "@babel/core": "^7.20.0"
+    "@babel/core": "^7.20.0",
+    "@types/react-native-table-component": "^1.2.4"
   },
   "private": true
 }

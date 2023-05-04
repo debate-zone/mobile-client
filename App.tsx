@@ -13,19 +13,10 @@ export default function App() {
 
     return (
         <View style={styles.container}>
-            <Text style={{marginBottom: 100}}>Select your political preference</Text>
-            <StatusBar style="auto" />
+            <Text style={{marginBottom: 50}}>Select your political preference</Text>
+            {/* <StatusBar style="auto" /> */}
             {/* <CameraComponent /> */}
-            <PoliticalCompass
-                size={19.47}
-                cellStyle={{ backgroundColor: 'silver' }}
-                renderButton={() => (
-                    <TouchableOpacity onPress={handleButtonPress}>
-                        <Text>BUTTON</Text>
-                    </TouchableOpacity>
-                )}
-            />
-            {/* <PoliticalCompass size={19.47} cellStyle={{ backgroundColor: 'silver' }} /> */}
+            <PoliticalCompass  />
         </View>
     );
 }
