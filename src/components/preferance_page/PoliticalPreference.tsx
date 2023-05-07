@@ -113,10 +113,11 @@ const styles = StyleSheet.create({
   },
   bottomShadows: {
     position: 'absolute',
+    top: 40,
     left: 0,
     right: 0,
     bottom: 50,
-    height: '75%',
+    height: '85%',
     backgroundColor: 'black',
     opacity: 1,
     borderRadius: 120,
@@ -207,3 +208,72 @@ const styles = StyleSheet.create({
 });
 
 export default PoliticalCompass;
+
+
+
+// ! This part without buttons  
+
+// import React from 'react';
+// import { StyleSheet, TouchableOpacity, View, Text } from 'react-native';
+
+// const PoliticalCompass: React.FC = () => {
+//   const gridSize = 20;
+
+//   const renderCells = () => {
+//     const cells = [];
+  
+//     for (let i = 0; i < gridSize; i++) {
+//       const row = [];
+  
+//       for (let j = 0; j < gridSize; j++) {
+//         const horizontalLineIndex = 9;
+//         const verticalLineIndex = 8;
+  
+//         const cellStyle = {
+//           ...styles.cell,
+//           ...(i === horizontalLineIndex && styles.horizontalLine),
+//           ...(j === verticalLineIndex && styles.verticalLine),
+//           backgroundColor: 'black',
+//         };
+//         row.push(<View style={cellStyle} key={`${i}-${j}`} />);
+//       }
+  
+//       cells.push(<View style={styles.row} key={i}>{row}</View>);
+//     }
+//     return cells;
+//   };
+
+//   return (
+//     <View style={styles.grid}>
+//       {renderCells()}
+//     </View>
+//   );
+// };
+
+// const styles = StyleSheet.create({
+//   grid: {
+//     flexDirection: 'row',
+//     flexWrap: 'wrap',
+//     backgroundColor: 'black',
+//     border: '3px solid rgba(255, 255, 255, 0.5)',
+//   },
+//   row: {
+//     flexDirection: 'row',
+//   },
+//   cell: {
+//     width: 20,
+//     height: 20,
+//     margin: 1,
+//     backgroundColor: '#fff',
+//   },
+//   horizontalLine: {
+//     borderBottomWidth: 3,
+//     borderBottomColor: 'black',
+//   },
+//   verticalLine: {
+//     borderRightWidth: 3,
+//     borderRightColor: 'black',
+//   },
+// });
+
+// export default PoliticalCompass;
