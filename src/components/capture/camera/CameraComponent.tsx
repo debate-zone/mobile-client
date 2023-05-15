@@ -3,9 +3,9 @@ import {Camera, CameraType, FaceDetectionResult} from "expo-camera";
 import React, {useState} from "react";
 import {useAssets} from "expo-asset";
 import * as FaceDetector from 'expo-face-detector';
-import styles from './CameraComponent.module.scss';
+// import styles from './CameraComponent.module.scss';
 
-/*const styles = StyleSheet.create({
+const styles = StyleSheet.create({
     container: {
         height: '100%',
         width: '100%',
@@ -28,7 +28,7 @@ import styles from './CameraComponent.module.scss';
         marginBottom: 10,
         color: 'white',
     }
-});*/
+})
 
 
 type Face = {

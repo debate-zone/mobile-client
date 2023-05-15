@@ -1,15 +1,22 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
-import CameraComponent from "./src/components/capture/camera/CameraComponent";
+import { GestureResponderEvent, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+// import CameraComponent from "./src/components/capture/camera/CameraComponent"
+import PoliticalCompass from "./src/components/preferance_page/PoliticalPreference"
+import React from 'react';
+import { Colors } from 'react-native/Libraries/NewAppScreen';
+
 
 export default function App() {
+    function handleButtonPress(event: GestureResponderEvent): void {
+        throw new Error('Function not implemented.');
+    }
+
     return (
         <View style={styles.container}>
-            <Text>Open up App.js to start working on your app!</Text>
-            <StatusBar style="auto" />
-
-            <CameraComponent />
-
+            <Text style={{marginBottom: 50}}>Select your political preference</Text>
+            {/* <StatusBar style="auto" /> */}
+            {/* <CameraComponent /> */}
+            <PoliticalCompass  />
         </View>
     );
 }
