@@ -4,7 +4,7 @@ import * as WebBrowser from 'expo-web-browser';
 import * as Google from 'expo-auth-session/providers/google';
 import Toast from 'react-native-root-toast';
 import { saveToken } from '../../../utils/loginUtils';
-import { LoginTypeEnum } from '../../../utils/loginTypeEnum';
+import { TokenProviderEnum } from '../../../enums/TokenProvider';
 
 WebBrowser.maybeCompleteAuthSession();
 
@@ -19,6 +19,7 @@ export const LoginGoogleComponent = (
     const [userInfo, setUserInfo] = useState(null);
 
     const [request, response, promptAsync] = Google.useAuthRequest({
+        expoClientId: 'YOUR_WEB_CLIENT_ID.apps.googleusercontent.com',
         androidClientId: process.env.GOOGLE_ANDROID_CLIENT_ID,
         iosClientId: process.env.GOOGLE_IOS_CLIENT_ID,
     });
@@ -27,7 +28,7 @@ export const LoginGoogleComponent = (
         if (response?.type === 'success') {
             saveToken(
                 response.authentication.accessToken,
-                LoginTypeEnum.google,
+                TokenProviderEnum.GOOGLE,
             );
             setToken(response.authentication.accessToken);
             getUserInfo();

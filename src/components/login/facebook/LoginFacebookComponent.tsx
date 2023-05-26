@@ -4,7 +4,7 @@ import * as Facebook from 'expo-auth-session/providers/facebook';
 import * as WebBrowser from 'expo-web-browser';
 import Toast from 'react-native-root-toast';
 import { saveToken } from '../../../utils/loginUtils';
-import { LoginTypeEnum } from '../../../utils/loginTypeEnum';
+import { TokenProviderEnum } from '../../../enums/TokenProvider';
 
 WebBrowser.maybeCompleteAuthSession();
 
@@ -34,7 +34,10 @@ export const LoginFacebookComponent = (
             response.type === 'success' &&
             response.authentication
         ) {
-            saveToken(response.authentication.accessToken, LoginTypeEnum.fb);
+            saveToken(
+                response.authentication.accessToken,
+                TokenProviderEnum.FACEBOOK,
+            );
         }
     }, [response]);
 

@@ -2,7 +2,7 @@ import * as AppleAuthentication from 'expo-apple-authentication';
 import { View } from 'react-native';
 import Toast from 'react-native-root-toast';
 import { saveToken, toastLoginFailed } from '../../../utils/loginUtils';
-import { LoginTypeEnum } from '../../../utils/loginTypeEnum';
+import { TokenProviderEnum } from '../../../enums/TokenProvider';
 // import styles from './LoginAppleComponent.module.scss';
 
 export type LoginAppleComponentProps = {
@@ -21,7 +21,7 @@ export const LoginAppleComponent = (
                         AppleAuthentication.AppleAuthenticationScope.EMAIL,
                     ],
                 });
-            await saveToken(credential.identityToken, LoginTypeEnum.apple);
+            await saveToken(credential.identityToken, TokenProviderEnum.APPLE);
             loginAppleComponentProps.toNext();
         } catch (e) {
             console.log(e);

@@ -13,7 +13,11 @@ export default function RootNavigation() {
 
     return (
         <NavigationContainer>
-            <Stack.Navigator>
+            <Stack.Navigator
+                initialRouteName={
+                    tokenPresent ? HomeScreen.name : LoginScreen.name
+                }
+            >
                 <Stack.Screen
                     name={LoginScreen.name}
                     component={LoginScreen}
