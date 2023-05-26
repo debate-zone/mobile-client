@@ -1,11 +1,16 @@
 import { get, save } from '../store/secure/secureStoreService';
 import { KeyEnum } from '../store/secure/keyEnum';
 import Toast from 'react-native-root-toast';
-import { LoginTypeEnum } from '@/utils/loginTypeEnum';
+import { TokenProviderEnum } from '../enums/TokenProvider';
+
+export type Token = {
+    token: string;
+    tokenProvider: TokenProviderEnum;
+};
 
 export async function saveToken(
     token: string | null | undefined,
-    loginType: LoginTypeEnum,
+    tokenProvider: TokenProviderEnum,
 ): Promise<void> {
     if (!token) {
         Toast.show('Token can`t be empty', {
@@ -14,8 +19,13 @@ export async function saveToken(
         return;
     }
     try {
-        await save(KeyEnum.token, token);
-        await save(KeyEnum.loginType, loginType);
+        await save(
+            KeyEnum.token,
+            JSON.stringify({
+                token,
+                tokenProvider,
+            } as Token),
+        );
         Toast.show('Login successfully.', {
             duration: Toast.durations.LONG,
         });
@@ -26,14 +36,8 @@ export async function saveToken(
     }
 }
 
-export async function getToken(): Promise<string | null> {
-    return await get(KeyEnum.token);
-}
-
-export async function isToken(): Promise<boolean> {
-    const token: string | null = await get(KeyEnum.token);
-
-    return token != null;
+export async function getToken(): Promise<Token | null> {
+    return JSON.parse(await get(KeyEnum.token));
 }
 
 export const toastLoginFailed = () => {

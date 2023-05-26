@@ -3,6 +3,7 @@ import { RootStackParamList } from '../../types';
 import { NativeStackNavigationProp } from 'react-native-screens/native-stack';
 import { getToken } from '../../utils/loginUtils';
 import Toast from 'react-native-root-toast';
+import { request } from '../../apiClient/apiClient';
 
 interface RootScreenProps {
     navigation: NativeStackNavigationProp<RootStackParamList, 'LoginScreen'>;
@@ -15,14 +16,7 @@ export const LoginScreen = ({ navigation }: RootScreenProps) => {
         let user = undefined;
 
         try {
-            const response = await fetch('http://localhost:8090/api/login', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    Authorization: 'Bearer ' + token,
-                },
-            });
-            user = await response.json();
+            const user = await request('GET', 'login', {});
         } catch (e) {
             Toast.show('Login failed', {
                 duration: Toast.durations.LONG,
