@@ -25,9 +25,14 @@ export const PoliticalPreferenceScreen = ({ navigation }: RootScreenProps) => {
         }
     };
 
+    const onPoliticalPreferenceSkipped = async () => {
+        navigation.navigate('HomeScreen');
+    };
+
     return (
         <PoliticalPreference
             onPoliticalPreferenceSelected={onPoliticalPreferenceSelected}
+            onPoliticalPreferenceSkipped={onPoliticalPreferenceSkipped}
         />
     );
 };
