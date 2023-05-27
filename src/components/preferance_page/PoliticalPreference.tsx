@@ -3,6 +3,7 @@ import { StyleSheet, TouchableOpacity, View, Text } from 'react-native';
 
 interface PoliticalCompassProps {
     onPoliticalPreferenceSelected: (politicalPreferenceKey: string) => void;
+    onPoliticalPreferenceSkipped: () => void;
 }
 
 const PoliticalCompass = (props: PoliticalCompassProps) => {
@@ -113,7 +114,10 @@ const PoliticalCompass = (props: PoliticalCompassProps) => {
     return (
         <View style={styles.container}>
             <View style={styles.grid}>{renderCells()}</View>
-            <TouchableOpacity style={styles.skipButton}>
+            <TouchableOpacity
+                onPress={props.onPoliticalPreferenceSkipped}
+                style={styles.skipButton}
+            >
                 <Text style={styles.skipText}>Skip</Text>
             </TouchableOpacity>
         </View>
