@@ -1,10 +1,17 @@
 import { useEffect, useState } from 'react';
-import { Button, StyleSheet, Text, View } from 'react-native';
+import { Button, StyleSheet, View } from 'react-native';
 import * as WebBrowser from 'expo-web-browser';
 import * as Google from 'expo-auth-session/providers/google';
 import Toast from 'react-native-root-toast';
 import { saveToken } from '../../../utils/loginUtils';
 import { TokenProviderEnum } from '../../../enums/TokenProvider';
+
+import {
+    GOOGLE_ANDROID_CLIENT_ID,
+    GOOGLE_IOS_CLIENT_ID,
+    EXPO_CLIENT_ID,
+    // @ts-ignore
+} from '@env';
 
 WebBrowser.maybeCompleteAuthSession();
 
@@ -16,12 +23,13 @@ export const LoginGoogleComponent = (
     loginComponentProps: LoginComponentProps,
 ) => {
     const [token, setToken] = useState('');
-    const [userInfo, setUserInfo] = useState(null);
 
     const [request, response, promptAsync] = Google.useAuthRequest({
-        expoClientId: 'YOUR_WEB_CLIENT_ID.apps.googleusercontent.com',
-        androidClientId: process.env.GOOGLE_ANDROID_CLIENT_ID,
-        iosClientId: process.env.GOOGLE_IOS_CLIENT_ID,
+        expoClientId: EXPO_CLIENT_ID,
+        androidClientId: GOOGLE_ANDROID_CLIENT_ID,
+        iosClientId: GOOGLE_IOS_CLIENT_ID,
+        scopes: ['profile', 'email', 'openid'],
+        selectAccount: true,
     });
 
     useEffect(() => {
@@ -31,41 +39,22 @@ export const LoginGoogleComponent = (
                 TokenProviderEnum.GOOGLE,
             );
             setToken(response.authentication.accessToken);
-            getUserInfo();
+            console.log(response.authentication.accessToken);
+            loginComponentProps.toNext();
+        } else {
+            Toast.show('Uh oh, something went wrong');
         }
     }, [response, token]);
 
-    const getUserInfo = async () => {
-        try {
-            const response = await fetch(
-                'https://www.googleapis.com/userinfo/v2/me',
-                {
-                    headers: { Authorization: `Bearer ${token}` },
-                },
-            );
-
-            const user = await response.json();
-            setUserInfo(user);
-        } catch (error) {
-            Toast.show(`Something happened wrong on retrieve user`, {
-                duration: Toast.durations.LONG,
-            });
-        }
-    };
-
     return (
         <View style={styles.container}>
-            {userInfo === null ? (
-                <Button
-                    title="Sign in with Google"
-                    disabled={!request}
-                    onPress={() => {
-                        promptAsync();
-                    }}
-                />
-            ) : (
-                <Text style={styles.text}>{userInfo.name}</Text>
-            )}
+            <Button
+                title="Sign in with Google"
+                disabled={!request}
+                onPress={() => {
+                    promptAsync();
+                }}
+            />
         </View>
     );
 };

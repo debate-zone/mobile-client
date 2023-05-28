@@ -5,7 +5,7 @@
     "start": "expo start",
     "android": "expo start --android",
     "ios": "expo start --ios",
-    "web": "expo start --web",
+    "web": "expo start --web --clear",
     "prettier:fix": "npx prettier --write \"**/*.{js,jsx,ts,tsx,json,md}\""
   },
   "dependencies": {
@@ -34,10 +34,11 @@
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-native": "0.71.8",
+    "react-native-dotenv": "^3.4.8",
     "react-native-root-toast": "3.4.1",
     "react-native-safe-area-context": "4.5.0",
-    "react-native-screens": "~3.20.0",
     "react-native-sass-transformer": "^2.0.0",
+    "react-native-screens": "~3.20.0",
     "react-native-svg": "13.4.0",
     "react-native-table-component": "^1.2.2",
     "react-native-web": "~0.18.10",

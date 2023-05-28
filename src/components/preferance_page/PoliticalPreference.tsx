@@ -99,12 +99,15 @@ const PoliticalCompass = (props: PoliticalCompassProps) => {
             <TouchableOpacity
                 style={[styles.socialDemocracy, styles.buttonContainer]}
                 key="Social democracy"
+                onPress={() => {
+                    props.onPoliticalPreferenceSelected('socialDemocracy');
+                }}
             >
                 <Text style={styles.buttonText}>Social Democracy</Text>
             </TouchableOpacity>,
         );
         cells.forEach(cell => {
-            cell.props.onPress = () => {
+            cell.onPress = () => {
                 props.onPoliticalPreferenceSelected(cell.key);
             };
         });
