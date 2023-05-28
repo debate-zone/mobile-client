@@ -2,6 +2,7 @@ import PoliticalPreference from '../../components/preferance_page/PoliticalPrefe
 import { request } from '../../apiClient/apiClient';
 import { NativeStackNavigationProp } from 'react-native-screens/native-stack';
 import { RootStackParamList } from '../../types';
+import { User } from '../../types/user';
 
 interface RootScreenProps {
     navigation: NativeStackNavigationProp<
@@ -14,9 +15,8 @@ export const PoliticalPreferenceScreen = ({ navigation }: RootScreenProps) => {
     const onPoliticalPreferenceSelected = async (
         politicalPreference: string,
     ) => {
-        const user = await request<{
-            politicalPreference: string;
-        }>('POST', '/users/updateUser', {
+        console.log(politicalPreference);
+        const user: User = await request<User>('POST', '/users/updateUser', {
             politicalPreference,
         });
 

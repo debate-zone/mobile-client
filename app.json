@@ -16,6 +16,7 @@
       "**/*"
     ],
     "ios": {
+      "bundleIdentifier": "eu.debatezone",
       "supportsTablet": true,
       "config": {
         "usesNonExemptEncryption": false
