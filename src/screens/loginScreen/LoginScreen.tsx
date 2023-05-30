@@ -4,7 +4,6 @@ import { NativeStackNavigationProp } from 'react-native-screens/native-stack';
 import Toast from 'react-native-root-toast';
 import { request } from '../../apiClient/apiClient';
 import { User } from '../../types/user';
-import { getToken } from '../../utils/loginUtils';
 
 interface RootScreenProps {
     navigation: NativeStackNavigationProp<RootStackParamList, 'LoginScreen'>;
@@ -13,7 +12,6 @@ interface RootScreenProps {
 export const LoginScreen = ({ navigation }: RootScreenProps) => {
     const toNext = async () => {
         let user: User = undefined;
-        console.log(await getToken());
         try {
             user = await request<User>('POST', '/auth/login');
         } catch (e) {

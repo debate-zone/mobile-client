@@ -5,6 +5,8 @@ import * as WebBrowser from 'expo-web-browser';
 import Toast from 'react-native-root-toast';
 import { saveToken } from '../../../utils/loginUtils';
 import { TokenProviderEnum } from '../../../enums/TokenProvider';
+// @ts-ignore
+import { FACEBOOK_APP_ID } from '@env';
 
 WebBrowser.maybeCompleteAuthSession();
 
@@ -15,10 +17,8 @@ export type LoginComponentProps = {
 export const LoginFacebookComponent = (
     loginComponentProps: LoginComponentProps,
 ) => {
-    const [user, setUser] = useState(null);
     const [request, response, promptAsync] = Facebook.useAuthRequest({
-        androidClientId: process.env.FB_ANDROID_CLIENT_ID,
-        iosClientId: process.env.FB_IOS_CLIENT_ID,
+        clientId: FACEBOOK_APP_ID,
     });
 
     if (request) {
@@ -38,6 +38,7 @@ export const LoginFacebookComponent = (
                 response.authentication.accessToken,
                 TokenProviderEnum.FACEBOOK,
             );
+            loginComponentProps.toNext();
         }
     }, [response]);
 
@@ -51,31 +52,14 @@ export const LoginFacebookComponent = (
 
     return (
         <View style={styles.container}>
-            {user ? (
-                <Profile user={user} />
-            ) : (
-                <Button
-                    disabled={!request}
-                    title="Sign in with Facebook"
-                    onPress={handlePressAsync}
-                />
-            )}
+            <Button
+                disabled={!request}
+                title="Sign in with Facebook"
+                onPress={handlePressAsync}
+            />
         </View>
     );
 };
-
-function Profile({ user }) {
-    return (
-        <View style={styles.profile}>
-            <Image
-                source={{ uri: user.picture.data.url }}
-                style={styles.image}
-            />
-            <Text style={styles.name}>{user.name}</Text>
-            <Text>ID: {user.id}</Text>
-        </View>
-    );
-}
 
 const styles = StyleSheet.create({
     container: {
