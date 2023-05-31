@@ -37,7 +37,15 @@ export async function saveToken(
 }
 
 export async function getToken(): Promise<Token | null> {
-    return JSON.parse(await get(KeyEnum.token));
+    try {
+        return JSON.parse(await get(KeyEnum.token));
+    } catch (e) {
+        return null;
+    }
+}
+
+export async function removeToken(): Promise<void> {
+    await save(KeyEnum.token, '');
 }
 
 export const toastLoginFailed = () => {

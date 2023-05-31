@@ -39,7 +39,6 @@ export const LoginGoogleComponent = (
                 TokenProviderEnum.GOOGLE,
             );
             setToken(response.authentication.accessToken);
-            console.log(response.authentication.accessToken);
             loginComponentProps.toNext();
         } else {
             Toast.show('Uh oh, something went wrong');
