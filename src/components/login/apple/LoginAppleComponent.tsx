@@ -3,7 +3,6 @@ import { View } from 'react-native';
 import Toast from 'react-native-root-toast';
 import { saveToken, toastLoginFailed } from '../../../utils/loginUtils';
 import { TokenProviderEnum } from '../../../enums/TokenProvider';
-// import styles from './LoginAppleComponent.module.scss';
 
 export type LoginAppleComponentProps = {
     toNext: () => void;
