@@ -100,7 +100,7 @@ const PoliticalCompass = (props: PoliticalCompassProps) => {
                 style={[styles.socialDemocracy, styles.buttonContainer]}
                 key="Social democracy"
                 onPress={() => {
-                    props.onPoliticalPreferenceSelected('socialDemocracy');
+                    props.onPoliticalPreferenceSelected('social_democrat');
                 }}
             >
                 <Text style={styles.buttonText}>Social Democracy</Text>

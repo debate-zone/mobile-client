@@ -1,5 +1,6 @@
 {
   "expo": {
+    "owner": "debate-zone",
     "scheme": ["debatezone", "fb563289419313369"],
     "name": "mobile-client",
     "slug": "mobile-client",
