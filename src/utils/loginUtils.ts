@@ -2,6 +2,7 @@ import { get, save } from '../store/secure/secureStoreService';
 import { KeyEnum } from '../store/secure/keyEnum';
 import Toast from 'react-native-root-toast';
 import { TokenProviderEnum } from '../enums/TokenProvider';
+import { createError } from '../utils/error';
 
 export type Token = {
     token: string;
@@ -13,10 +14,7 @@ export async function saveToken(
     tokenProvider: TokenProviderEnum,
 ): Promise<void> {
     if (!token) {
-        Toast.show('Token can`t be empty', {
-            duration: Toast.durations.LONG,
-        });
-        return;
+        throw createError('Token is null or undefined');
     }
     try {
         await save(
@@ -26,13 +24,8 @@ export async function saveToken(
                 tokenProvider,
             } as Token),
         );
-        Toast.show('Login successfully.', {
-            duration: Toast.durations.LONG,
-        });
     } catch (e) {
-        Toast.show('Saving token failed', {
-            duration: Toast.durations.LONG,
-        });
+        throw createError('Token could not be saved');
     }
 }
 

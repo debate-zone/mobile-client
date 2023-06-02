@@ -18,6 +18,7 @@ export const LoginScreen = ({ navigation }: RootScreenProps) => {
         try {
             user = await request<User>('POST', '/auth/login');
         } catch (e) {
+            console.log(e.message);
             Toast.show('Login failed', {
                 duration: Toast.durations.LONG,
             });
