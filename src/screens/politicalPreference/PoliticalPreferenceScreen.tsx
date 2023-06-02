@@ -15,7 +15,6 @@ export const PoliticalPreferenceScreen = ({ navigation }: RootScreenProps) => {
     const onPoliticalPreferenceSelected = async (
         politicalPreference: string,
     ) => {
-        console.log(politicalPreference);
         const user: User = await request<User>('POST', '/users/updateUser', {
             politicalPreference,
         });

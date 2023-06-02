@@ -1,6 +1,7 @@
 import { getToken, Token } from '../utils/loginUtils';
 // @ts-ignore
 import { API_URL } from '@env';
+import { createError } from '../utils/error';
 
 type ErrorBody = {
     status: string;
@@ -13,6 +14,7 @@ type SuccessBody<T> = {
     status: string;
     data: T;
 };
+
 type Method = 'GET' | 'POST' | 'PUT' | 'DELETE';
 
 export async function request<T>(method: Method, path: string, body?: any) {
@@ -41,9 +43,9 @@ export async function request<T>(method: Method, path: string, body?: any) {
             return ((await response.json()) as SuccessBody<T>).data;
         } else {
             const errorBody: ErrorBody = (await response.json()) as ErrorBody;
-            throw Error(errorBody.error.message);
+            throw createError(errorBody.error.message);
         }
     } catch (error) {
-        throw error;
+        throw createError('API request failed.', error);
     }
 }
