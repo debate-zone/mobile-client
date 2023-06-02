@@ -1,8 +1,9 @@
 # How to run
 
 1. Clone the repo
+2. `expo login`(with @debatezone.eu account)
 2. `npm install`
-3. `npx expo start --tunnel`
+3. `npx expo start`
 4. download expo app on your phone
 5. scan the `QR` code with your phone
 6. **_enjoy_**
