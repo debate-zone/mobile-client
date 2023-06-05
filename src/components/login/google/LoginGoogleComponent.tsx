@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Button, StyleSheet, View } from 'react-native';
+import {Button, StyleSheet, TouchableOpacity, View} from 'react-native';
 import * as WebBrowser from 'expo-web-browser';
 import * as Google from 'expo-auth-session/providers/google';
 import Toast from 'react-native-root-toast';
@@ -12,6 +12,7 @@ import {
     EXPO_CLIENT_ID,
     // @ts-ignore
 } from '@env';
+import GoogleSvg from "../../../../src/components/svgIcons/google";
 
 WebBrowser.maybeCompleteAuthSession();
 
@@ -47,26 +48,20 @@ export const LoginGoogleComponent = (
 
     return (
         <View style={styles.container}>
-            <Button
-                title="Sign in with Google"
+            <TouchableOpacity
                 disabled={!request}
                 onPress={() => {
                     promptAsync();
                 }}
-            />
+            >
+                <GoogleSvg/>
+            </TouchableOpacity>
         </View>
     );
 };
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
-        backgroundColor: '#fff',
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-    text: {
-        fontSize: 20,
-        fontWeight: 'bold',
-    },
+        flex: 1
+    }
 });

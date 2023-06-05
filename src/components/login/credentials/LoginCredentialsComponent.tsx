@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { getToken, saveToken } from '../../../utils/loginUtils';
 import { TokenProviderEnum } from '../../../enums/TokenProvider';
-import { Button, TextInput, View } from 'react-native';
+import {Button, TextInput, TouchableOpacity, View, Text} from 'react-native';
 import { request } from '../../../apiClient/apiClient';
 import Toast from 'react-native-root-toast';
 
@@ -14,7 +14,7 @@ export type OutputLoginCredentialsUser = {
 };
 
 export const LoginCredentialsComponent = (
-    loginComponentProps: LoginComponentProps,
+    loginComponentProps: LoginComponentProps, props
 ) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -47,11 +47,19 @@ export const LoginCredentialsComponent = (
                 flex: 1,
                 justifyContent: 'center',
                 alignItems: 'center',
+                width: '100%',
             }}
+            {...props}
         >
             <TextInput
                 style={{
-                    marginBottom: 10,
+                    width: '66%',
+                    height: 40,
+                    borderColor: 'gray',
+                    borderWidth: 1,
+                    borderRadius: 21,
+                    paddingHorizontal: 10,
+                    marginBottom: 2
                 }}
                 placeholder="Email"
                 onChangeText={text => setEmail(text)}
@@ -59,22 +67,41 @@ export const LoginCredentialsComponent = (
             />
             <TextInput
                 style={{
-                    marginBottom: 10,
+                    width: '66%',
+                    height: 40,
+                    borderColor: 'gray',
+                    borderWidth: 1,
+                    borderRadius: 21,
+                    paddingHorizontal: 10,
+                    marginBottom: 2
                 }}
                 placeholder="Password"
                 onChangeText={text => setPassword(text)}
                 value={password}
                 secureTextEntry={true}
             />
-            <Button
-                title="Login"
-                onPress={() => {
+            {/*<Button*/}
+            {/*    title="Login"*/}
+            {/*    onPress={() => {*/}
+            {/*        login({*/}
+            {/*            email: email,*/}
+            {/*            password: password,*/}
+            {/*        });*/}
+            {/*    }}*/}
+            {/*/>*/}
+
+            <TouchableOpacity
+                style={{backgroundColor: 'gray', borderRadius: 15, height: 50, width: 103, justifyContent: 'center',
+                alignItems: 'center', marginTop: 3}}
+                onPress={() =>{
                     login({
                         email: email,
-                        password: password,
-                    });
-                }}
-            />
+                        password: password
+                    })
+                } }
+            >
+                <Text style={{justifyContent: 'center', alignItems: 'center' }}>Login</Text>
+            </TouchableOpacity>
         </View>
     );
 };
