@@ -1,8 +1,10 @@
 import * as AppleAuthentication from 'expo-apple-authentication';
-import { View } from 'react-native';
+import {TouchableOpacity, View} from 'react-native';
 import Toast from 'react-native-root-toast';
 import { saveToken, toastLoginFailed } from '../../../utils/loginUtils';
 import { TokenProviderEnum } from '../../../enums/TokenProvider';
+import AppleSvg from "../../../../src/components/svgIcons/apple";
+// import styles from './LoginAppleComponent.module.scss';
 
 export type LoginAppleComponentProps = {
     toNext: () => void;
@@ -35,24 +37,10 @@ export const LoginAppleComponent = (
     }
 
     return (
-        <View
-        // style={styles.container}
-        >
-            <AppleAuthentication.AppleAuthenticationButton
-                buttonType={
-                    AppleAuthentication.AppleAuthenticationButtonType.SIGN_IN
-                }
-                buttonStyle={
-                    AppleAuthentication.AppleAuthenticationButtonStyle.BLACK
-                }
-                style={{
-                    top: 20,
-                    width: 390,
-                    height: 100,
-                }}
-                // style={styles.button}
-                onPress={onPress}
-            />
+        <View style={{flex: 1}}>
+            <TouchableOpacity>
+                <AppleSvg/>
+            </TouchableOpacity>
         </View>
     );
 };
