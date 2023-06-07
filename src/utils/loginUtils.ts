@@ -3,6 +3,7 @@ import { KeyEnum } from '../store/secure/keyEnum';
 import Toast from 'react-native-root-toast';
 import { TokenProviderEnum } from '../enums/TokenProvider';
 import { createError } from '../utils/error';
+import { User } from '../types/user';
 
 export type Token = {
     token: string;
@@ -39,6 +40,22 @@ export async function getToken(): Promise<Token | null> {
 
 export async function removeToken(): Promise<void> {
     await save(KeyEnum.token, '');
+}
+
+export async function saveUser(user: User): Promise<void> {
+    await save(KeyEnum.user, JSON.stringify(user));
+}
+
+export async function getUser(): Promise<User | null> {
+    try {
+        return JSON.parse(await get(KeyEnum.user));
+    } catch (e) {
+        return null;
+    }
+}
+
+export async function removeUser(): Promise<void> {
+    await save(KeyEnum.user, '');
 }
 
 export const toastLoginFailed = () => {

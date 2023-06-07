@@ -1,4 +1,4 @@
 export enum KeyEnum {
     token = 'token',
-    USER = 'user',
+    user = 'user',
 }

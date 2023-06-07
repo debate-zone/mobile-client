@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react';
-import {Button, Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import { useEffect } from 'react';
+import { StyleSheet, TouchableOpacity, View } from 'react-native';
 import * as Facebook from 'expo-auth-session/providers/facebook';
 import * as WebBrowser from 'expo-web-browser';
 import Toast from 'react-native-root-toast';
@@ -7,7 +7,7 @@ import { saveToken } from '../../../utils/loginUtils';
 import { TokenProviderEnum } from '../../../enums/TokenProvider';
 // @ts-ignore
 import { FACEBOOK_APP_ID } from '@env';
-import FacebookSvg from "../../../../src/components/svgIcons/facebook";
+import FacebookSvg from '../../../../src/components/svgIcons/facebook';
 
 WebBrowser.maybeCompleteAuthSession();
 
@@ -38,8 +38,9 @@ export const LoginFacebookComponent = (
             saveToken(
                 response.authentication.accessToken,
                 TokenProviderEnum.FACEBOOK,
-            );
-            loginComponentProps.toNext();
+            ).then(() => {
+                loginComponentProps.toNext();
+            });
         }
     }, [response]);
 
@@ -53,11 +54,8 @@ export const LoginFacebookComponent = (
 
     return (
         <View style={styles.container}>
-            <TouchableOpacity
-            disabled={!request}
-            onPress={handlePressAsync}
-            >
-                <FacebookSvg/>
+            <TouchableOpacity disabled={!request} onPress={handlePressAsync}>
+                <FacebookSvg />
             </TouchableOpacity>
         </View>
     );
@@ -65,6 +63,6 @@ export const LoginFacebookComponent = (
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1
-    }
+        flex: 1,
+    },
 });

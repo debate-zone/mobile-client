@@ -28,6 +28,8 @@ export async function request<T>(method: Method, path: string, body?: any) {
                 Authorization: `Bearer ${token.token}`,
                 'X-Auth-Provider': token.tokenProvider,
             };
+        } else {
+            throw createError('No token found');
         }
 
         const response = await fetch(API_URL + path, {

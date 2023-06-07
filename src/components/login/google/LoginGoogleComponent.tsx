@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import {Button, StyleSheet, TouchableOpacity, View} from 'react-native';
+import { StyleSheet, TouchableOpacity, View } from 'react-native';
 import * as WebBrowser from 'expo-web-browser';
 import * as Google from 'expo-auth-session/providers/google';
 import Toast from 'react-native-root-toast';
@@ -12,7 +12,7 @@ import {
     EXPO_CLIENT_ID,
     // @ts-ignore
 } from '@env';
-import GoogleSvg from "../../../../src/components/svgIcons/google";
+import GoogleSvg from '../../../../src/components/svgIcons/google';
 
 WebBrowser.maybeCompleteAuthSession();
 
@@ -38,13 +38,13 @@ export const LoginGoogleComponent = (
             saveToken(
                 response.authentication.accessToken,
                 TokenProviderEnum.GOOGLE,
-            );
-            setToken(response.authentication.accessToken);
-            loginComponentProps.toNext();
+            ).then(() => {
+                loginComponentProps.toNext();
+            });
         } else {
             Toast.show('Uh oh, something went wrong');
         }
-    }, [response, token]);
+    }, [response]);
 
     return (
         <View style={styles.container}>
@@ -54,7 +54,7 @@ export const LoginGoogleComponent = (
                     promptAsync();
                 }}
             >
-                <GoogleSvg/>
+                <GoogleSvg />
             </TouchableOpacity>
         </View>
     );
@@ -62,6 +62,6 @@ export const LoginGoogleComponent = (
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1
-    }
+        flex: 1,
+    },
 });

@@ -4,8 +4,7 @@ import { NativeStackNavigationProp } from 'react-native-screens/native-stack';
 import Toast from 'react-native-root-toast';
 import { request } from '../../apiClient/apiClient';
 import { User } from '../../types/user';
-import { useEffect } from 'react';
-import { removeToken } from '../../utils/loginUtils';
+import { saveUser } from '../../utils/loginUtils';
 
 interface RootScreenProps {
     navigation: NativeStackNavigationProp<RootStackParamList, 'LoginScreen'>;
@@ -17,6 +16,8 @@ export const LoginScreen = ({ navigation }: RootScreenProps) => {
 
         try {
             user = await request<User>('POST', '/auth/login');
+            console.log('user:', user);
+            await saveUser(user);
         } catch (e) {
             console.log(e.message);
             Toast.show('Login failed', {
@@ -31,10 +32,6 @@ export const LoginScreen = ({ navigation }: RootScreenProps) => {
             navigation.navigate('PoliticalPreferenceScreen');
         }
     };
-
-    useEffect(() => {
-        removeToken();
-    }, []);
 
     return (
         <>
