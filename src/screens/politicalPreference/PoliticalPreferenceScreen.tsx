@@ -1,8 +1,13 @@
-import PoliticalPreference from '../../components/preferance_page/PoliticalPreference';
+import { PoliticalPreferenceComponent } from '../../components/politicalPreference/PoliticalPreferenceComponent';
 import { request } from '../../apiClient/apiClient';
 import { NativeStackNavigationProp } from 'react-native-screens/native-stack';
 import { RootStackParamList } from '../../types';
-import { User } from '../../types/user';
+import {
+    PoliticalPreference,
+    PoliticalPreferenceEnum,
+    User,
+} from '../../types/user';
+import { useEffect, useState } from 'react';
 
 interface RootScreenProps {
     navigation: NativeStackNavigationProp<
@@ -12,10 +17,14 @@ interface RootScreenProps {
 }
 
 export const PoliticalPreferenceScreen = ({ navigation }: RootScreenProps) => {
+    const [politicalPreferences, setPoliticalPreferences] = useState<
+        PoliticalPreference[]
+    >([]);
+
     const onPoliticalPreferenceSelected = async (
-        politicalPreference: string,
+        politicalPreference: PoliticalPreferenceEnum,
     ) => {
-        const user: User = await request<User>('POST', '/users/updateUser', {
+        const user: User = await request<User>('PUT', '/users/updateUser', {
             politicalPreference,
         });
 
@@ -28,10 +37,27 @@ export const PoliticalPreferenceScreen = ({ navigation }: RootScreenProps) => {
         navigation.navigate('HomeScreen');
     };
 
+    const retrievePoliticalPreferences = async () => {
+        const politicalPreferences = await request<{
+            politicalPreferences: PoliticalPreference[];
+        }>('GET', '/users/politicalPreferences/list');
+
+        return politicalPreferences.politicalPreferences;
+    };
+
+    useEffect(() => {
+        retrievePoliticalPreferences().then(politicalPreferences => {
+            setPoliticalPreferences(politicalPreferences);
+        });
+    }, []);
+
     return (
-        <PoliticalPreference
-            onPoliticalPreferenceSelected={onPoliticalPreferenceSelected}
-            onPoliticalPreferenceSkipped={onPoliticalPreferenceSkipped}
-        />
+        <>
+            <PoliticalPreferenceComponent
+                politicalPreferences={politicalPreferences}
+                onPoliticalPreferenceSelected={onPoliticalPreferenceSelected}
+                onPoliticalPreferenceSkipped={onPoliticalPreferenceSkipped}
+            />
+        </>
     );
 };

@@ -9,7 +9,7 @@ import {
     useNavigationContainerRef,
 } from '@react-navigation/native';
 import BottomBar from '../../src/components/bottomBar/bottomBar';
-import { View } from 'react-native';
+import { ProfileScreen } from '../screens/profileScreen/ProfileScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -56,7 +56,7 @@ export default function RootNavigation() {
                     }}
                 />
                 <Stack.Screen
-                    name={PoliticalPreferenceScreen.name}
+                    name={'PoliticalPreferenceScreen'}
                     component={PoliticalPreferenceScreen}
                     options={{
                         headerShown: false,
@@ -67,8 +67,15 @@ export default function RootNavigation() {
                     options={{
                         title: 'New Debate Zone',
                     }}
-                    name={NewDebateZoneScreen.name}
+                    name={'NewDebateZoneScreen'}
                     component={NewDebateZoneScreen}
+                />
+                <Stack.Screen
+                    options={{
+                        title: 'Profile',
+                    }}
+                    name={'ProfileScreen'}
+                    component={ProfileScreen}
                 />
             </Stack.Navigator>
             {hideBar && <BottomBar />}
