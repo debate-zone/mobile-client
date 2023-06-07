@@ -1,18 +1,14 @@
 import { RootSiblingParent } from 'react-native-root-siblings';
 import React from 'react';
 import RootNavigation from './src/navigation/rootNavigation';
-import {HomeScreen} from './src/screens/homeScreen/HomeScreen'
+import { PaperProvider } from 'react-native-paper';
+
 export default function App() {
     return (
-        <RootSiblingParent>
-            <RootNavigation />
-        </RootSiblingParent>
+        <PaperProvider>
+            <RootSiblingParent>
+                <RootNavigation />
+            </RootSiblingParent>
+        </PaperProvider>
     );
 }
-
-
-// export default function App() {
-//     return (
-//         <HomeScreen navigation={null}/>
-//     );
-// }
