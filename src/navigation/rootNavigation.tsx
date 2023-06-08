@@ -29,12 +29,12 @@ export default function RootNavigation() {
                 const currentRouteName =
                     navigationRef.current.getCurrentRoute().name;
                 const trackScreenView = (currentRouteName: string) => {
-                    if (
-                        currentRouteName != LoginScreen.name ||
-                        currentRouteName != PoliticalPreferenceScreen.name
-                    ) {
-                        setHideBar(true);
-                    }
+                    const isShowBar = !(
+                        currentRouteName === LoginScreen.name ||
+                        currentRouteName === PoliticalPreferenceScreen.name
+                    );
+
+                    setHideBar(isShowBar);
                 };
                 if (previousRouteName !== currentRouteName) {
                     routeNameRef.current = currentRouteName;
@@ -52,6 +52,7 @@ export default function RootNavigation() {
                     name={LoginScreen.name}
                     component={LoginScreen}
                     options={{
+                        gestureEnabled: false,
                         headerShown: false,
                     }}
                 />
@@ -59,13 +60,22 @@ export default function RootNavigation() {
                     name={'PoliticalPreferenceScreen'}
                     component={PoliticalPreferenceScreen}
                     options={{
+                        gestureEnabled: false,
                         headerShown: false,
                     }}
                 />
-                <Stack.Screen name={HomeScreen.name} component={HomeScreen} />
+                <Stack.Screen
+                    options={{
+                        gestureEnabled: false,
+                        headerShown: false,
+                    }}
+                    name={HomeScreen.name}
+                    component={HomeScreen}
+                />
                 <Stack.Screen
                     options={{
                         title: 'New Debate Zone',
+                        headerBackTitle: 'New Debate Zone',
                     }}
                     name={'NewDebateZoneScreen'}
                     component={NewDebateZoneScreen}
@@ -73,6 +83,7 @@ export default function RootNavigation() {
                 <Stack.Screen
                     options={{
                         title: 'Profile',
+                        headerBackTitle: 'Profile',
                     }}
                     name={'ProfileScreen'}
                     component={ProfileScreen}
