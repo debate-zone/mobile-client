@@ -1,5 +1,5 @@
 import { VictoryChart, VictoryLabel, VictoryScatter } from 'victory-native';
-import { PoliticalPreferenceEnum } from '@/types/user';
+import { PoliticalPreferenceEnum } from '../../types/user';
 import React, { useEffect, useState } from 'react';
 
 interface PoliticalPreferenceChartComponentProps {

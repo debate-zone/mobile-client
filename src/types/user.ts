@@ -1,6 +1,9 @@
 export type User = {
+    image?: string;
+    firstName?: string;
+    secondName?: string;
     email: string;
-    politicalPreference: PoliticalPreference;
+    politicalPreference?: PoliticalPreference;
 };
 
 export type PoliticalPreference = {
