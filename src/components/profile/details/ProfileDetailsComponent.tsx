@@ -2,7 +2,6 @@ import { Avatar, TextInput, Text, Button } from 'react-native-paper';
 import { View } from 'react-native';
 import { useState } from 'react';
 import { AvatarImageSource } from 'react-native-paper/lib/typescript/src/components/Avatar/AvatarImage';
-import { removeToken } from '../../../utils/loginUtils';
 
 interface ProfileDetailsComponentProps {
     imgSource?: AvatarImageSource;
@@ -32,7 +31,7 @@ export const ProfileDetailsComponent = (
                     marginRight: 20,
                 }}
                 size={120}
-                source={image}
+                source={props.imgSource}
             />
             <View
                 style={{
@@ -49,7 +48,7 @@ export const ProfileDetailsComponent = (
                             marginBottom: 15,
                         }}
                         label="Name"
-                        value={name}
+                        value={name || props.name}
                         onChangeText={text => {
                             setName(text);
                         }}
@@ -67,11 +66,10 @@ export const ProfileDetailsComponent = (
                             setIsEditingName(true);
                         }}
                     >
-                        {name}
+                        {name || props.name}
                     </Text>
                 )}
                 <Text>{props.email}</Text>
-                {/*    logout component*/}
                 <Button
                     style={{
                         marginTop: 20,

@@ -36,23 +36,44 @@ export const PoliticalPreferenceChartComponent: React.FC<
 
     return (
         <VictoryChart
-            domain={{ x: [-10, 10], y: [-10, 10] }}
+            theme={{
+                axis: {
+                    style: {
+                        axis: {
+                            stroke: '#3f3c39',
+                            strokeWidth: 1.8,
+                            opacity: 1.5,
+                        },
+                        tickLabels: {
+                            fill: 'transparent',
+                        },
+                        grid: {
+                            stroke: '#3f3c39',
+                            strokeWidth: 0.4,
+                        },
+                    },
+                },
+                scatter: {
+                    style: {
+                        labels: {
+                            fill: '#d98607',
+                            fontSize: 15,
+                            borderRadius: 10,
+                        },
+                    },
+                },
+            }}
+            domain={{ x: [-15, 15], y: [-15, 15] }}
             width={400}
             height={400}
         >
             <VictoryScatter
                 data={dataPoints}
+                size={10}
                 labels={({ datum }) => {
                     return datum.label;
                 }}
-                labelComponent={
-                    <VictoryLabel
-                        backgroundStyle={{
-                            fill: '#FCA311',
-                            fillOpacity: 0.5,
-                        }}
-                    />
-                }
+                labelComponent={<VictoryLabel />}
                 events={[
                     {
                         target: 'data',
@@ -60,7 +81,7 @@ export const PoliticalPreferenceChartComponent: React.FC<
                             onPressIn: () => {
                                 return [
                                     {
-                                        target: 'data',
+                                        target: 'labels',
                                         mutation: ({
                                             datum,
                                         }: {

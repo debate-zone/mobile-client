@@ -31,13 +31,7 @@ export const ProfileComponent: React.FC<ProfileComponentProps> = ({
 
     useEffect(() => {
         if (user) {
-            setName(
-                user.firstName
-                    ? user.firstName
-                    : '' + ' ' + user.secondName
-                    ? user.secondName
-                    : '',
-            );
+            setName(user.firstName + ' ' + user.secondName);
             setEmail(user.email);
             setPoliticalPreference(user.politicalPreference);
             setImage(user.image);

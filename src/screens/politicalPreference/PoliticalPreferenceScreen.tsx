@@ -8,6 +8,7 @@ import {
     User,
 } from '../../types/user';
 import { useEffect, useState } from 'react';
+import { saveUser } from '../../utils/loginUtils';
 
 interface RootScreenProps {
     navigation: NativeStackNavigationProp<
@@ -27,6 +28,8 @@ export const PoliticalPreferenceScreen = ({ navigation }: RootScreenProps) => {
         const user: User = await request<User>('PUT', '/users/updateUser', {
             politicalPreference,
         });
+
+        await saveUser(user);
 
         if (user.politicalPreference) {
             navigation.navigate('HomeScreen');
