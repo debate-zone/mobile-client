@@ -11,6 +11,7 @@ import {
 import BottomBar from '../../src/components/bottomBar/bottomBar';
 import { ProfileScreen } from '../screens/profileScreen/ProfileScreen';
 import { JoinListScreen } from '../screens/joinListScreen/JoinListScreen';
+import { JoinDetailsScreen } from '../screens/joinDetailsScreen/JoinDetailsScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -70,6 +71,15 @@ export default function RootNavigation() {
                 <Stack.Screen
                     name={'JoinListScreen'}
                     component={JoinListScreen}
+                />
+                <Stack.Screen
+                    options={{
+                        headerShown: true,
+                        gestureEnabled: true,
+                        headerTitle: '',
+                    }}
+                    name={'JoinDetailsScreen'}
+                    component={JoinDetailsScreen}
                 />
             </Stack.Navigator>
             {hideBar && <BottomBar />}
