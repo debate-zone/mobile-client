@@ -41,7 +41,6 @@ const JoinItem: React.FC<JoinItemProps> = ({
             </View>
             <TouchableOpacity
                 onPress={() => {
-                    console.log('JoinItem.tsx: onPress: ' + id);
                     onPress(id);
                 }}
             >
@@ -65,6 +64,13 @@ const styles = StyleSheet.create({
         borderRadius: 21,
         backgroundColor: 'white',
         borderColor: 'gray',
+        shadowOffset: {
+            width: 4,
+            height: 5,
+        },
+        shadowColor: 'black',
+        shadowRadius: 3,
+        shadowOpacity: 0.2,
     },
 });
 
