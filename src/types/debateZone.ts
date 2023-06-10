@@ -45,7 +45,7 @@ export enum Type {
 export enum Role {
     REFEREE = 'referee',
     VIEWER = 'viewer',
-    PARTICIPANT = 'participant',
+    DEBATER = 'debater',
 }
 
 export type OutputDebateZoneListItem = {

@@ -8,13 +8,15 @@ export const NewDebateZoneScreen = () => {
         const createdDebateZone: CreatedDebateZone =
             await request<CreatedDebateZone>(
                 'POST',
-                '/debate-zone/create',
+                '/debate-zones/create',
                 data,
             );
 
         Toast.show(`Debate zone "${createdDebateZone.title}" created`, {
             duration: Toast.durations.LONG,
         });
+
+        return createdDebateZone._id;
     };
 
     return (

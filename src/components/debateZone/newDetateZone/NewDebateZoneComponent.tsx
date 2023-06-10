@@ -1,11 +1,5 @@
 import React, { useState } from 'react';
-import {
-    View,
-    Text,
-    TextInput,
-    TouchableOpacity,
-    ScrollView,
-} from 'react-native';
+import { View, Text, TextInput, ScrollView } from 'react-native';
 import CheckBox from 'expo-checkbox';
 import {
     NewDebateZone,
@@ -17,9 +11,10 @@ import { PaperSelect } from 'react-native-paper-select';
 import { List, Button } from 'react-native-paper';
 import { DatePickerInput, TimePicker } from 'react-native-paper-dates';
 import { PossibleClockTypes } from 'react-native-paper-dates/lib/typescript/Time/timeUtils';
+import Toast from 'react-native-root-toast';
 
 interface NewDebateZoneComponentProps {
-    onSubmit: (newDebateZone: NewDebateZone) => void;
+    onSubmit: (newDebateZone: NewDebateZone) => Promise<string>;
 }
 
 export const NewDebateZoneComponent: React.FC<NewDebateZoneComponentProps> = ({
@@ -44,7 +39,7 @@ export const NewDebateZoneComponent: React.FC<NewDebateZoneComponentProps> = ({
     const [title, setTitle] = useState<string>();
     const [shortDescription, setShortDescription] = useState<string>();
     const [type, setType] = useState({
-        value: Type.POLITICAL,
+        value: '',
         list: typeList,
         selectedList: [],
         error: '',
@@ -66,17 +61,40 @@ export const NewDebateZoneComponent: React.FC<NewDebateZoneComponentProps> = ({
     const [isSave, setIsSave] = useState<boolean>();
 
     const handleSubmit = () => {
-        onSubmit({
+        return onSubmit({
             title: title,
             shortDescription: shortDescription,
-            type: type.selectedList[0]._id,
+            type: type.selectedList[0]?._id,
             roundTime: roundTime,
-            date: date.toISOString(),
+            date: date?.toISOString(),
             isPrivate: isPrivate,
             isAIReferee: isAIReferee,
             participants: participants,
             isPublicChoice: isPublicChoice,
             isSave: isSave,
+        });
+    };
+
+    const clearForm = () => {
+        setTitle('');
+        setShortDescription('');
+        setType({
+            ...type,
+            value: '',
+            selectedList: [],
+        });
+        setRoundTime(0);
+        setDate(undefined);
+        setIsPrivate(false);
+        setIsPublicChoice(false);
+        setIsAIReferee(false);
+        setIsSave(false);
+        setParticipants([]);
+        setNewParticipantEmail('');
+        setNewParticipantRole({
+            ...newParticipantRole,
+            value: '',
+            selectedList: [],
         });
     };
 
@@ -146,7 +164,6 @@ export const NewDebateZoneComponent: React.FC<NewDebateZoneComponentProps> = ({
                         />
 
                         <PaperSelect
-                            disabled={true}
                             value={type.value}
                             arrayList={type.list}
                             label={'Type*'}
@@ -440,7 +457,13 @@ export const NewDebateZoneComponent: React.FC<NewDebateZoneComponentProps> = ({
                         icon={'check'}
                         mode={'contained'}
                         onPress={() => {
-                            handleSubmit();
+                            handleSubmit()
+                                .then(() => clearForm())
+                                .catch(error => {
+                                    Toast.show(error.message, {
+                                        duration: Toast.durations.LONG,
+                                    });
+                                });
                         }}
                     >
                         Create
