@@ -5,4 +5,9 @@ export type RootStackParamList = {
     PoliticalPreferenceScreen: undefined;
     HomeScreen: undefined;
     NewDebateZoneScreen: undefined;
+    JoinListScreen: undefined;
+    ProfileScreen: undefined;
+    JoinDetailsScreen: {
+        id: string;
+    };
 };

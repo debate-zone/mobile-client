@@ -10,6 +10,7 @@ import {
 } from '@react-navigation/native';
 import BottomBar from '../../src/components/bottomBar/bottomBar';
 import { ProfileScreen } from '../screens/profileScreen/ProfileScreen';
+import { JoinListScreen } from '../screens/joinListScreen/JoinListScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -44,49 +45,31 @@ export default function RootNavigation() {
             }}
         >
             <Stack.Navigator
+                screenOptions={{
+                    headerShown: false,
+                    gestureEnabled: false,
+                }}
                 initialRouteName={
                     tokenPresent ? HomeScreen.name : LoginScreen.name
                 }
             >
-                <Stack.Screen
-                    name={LoginScreen.name}
-                    component={LoginScreen}
-                    options={{
-                        gestureEnabled: false,
-                        headerShown: false,
-                    }}
-                />
+                <Stack.Screen name={LoginScreen.name} component={LoginScreen} />
                 <Stack.Screen
                     name={'PoliticalPreferenceScreen'}
                     component={PoliticalPreferenceScreen}
-                    options={{
-                        gestureEnabled: false,
-                        headerShown: false,
-                    }}
                 />
+                <Stack.Screen name={HomeScreen.name} component={HomeScreen} />
                 <Stack.Screen
-                    options={{
-                        gestureEnabled: false,
-                        headerShown: false,
-                    }}
-                    name={HomeScreen.name}
-                    component={HomeScreen}
-                />
-                <Stack.Screen
-                    options={{
-                        title: 'New Debate Zone',
-                        headerBackTitle: 'New Debate Zone',
-                    }}
                     name={'NewDebateZoneScreen'}
                     component={NewDebateZoneScreen}
                 />
                 <Stack.Screen
-                    options={{
-                        title: 'Profile',
-                        headerBackTitle: 'Profile',
-                    }}
                     name={'ProfileScreen'}
                     component={ProfileScreen}
+                />
+                <Stack.Screen
+                    name={'JoinListScreen'}
+                    component={JoinListScreen}
                 />
             </Stack.Navigator>
             {hideBar && <BottomBar />}

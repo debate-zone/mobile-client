@@ -3,9 +3,18 @@ import { useEffect, useState } from 'react';
 import { getUser, removeToken, saveUser } from '../../utils/loginUtils';
 import { User } from '../../types/user';
 import { request } from '../../apiClient/apiClient';
+import { OutputDebateZoneList } from '../../types/debateZone';
+import { NativeStackNavigationProp } from 'react-native-screens/native-stack';
+import { RootStackParamList } from '../../types';
 
-export const ProfileScreen = ({ navigation }) => {
+interface RootScreenProps {
+    navigation: NativeStackNavigationProp<RootStackParamList, 'ProfileScreen'>;
+}
+
+export const ProfileScreen = ({ navigation }: RootScreenProps) => {
     const [currentUser, setCurrentUser] = useState<User>();
+    const [joinedDebateZones, setJoinedDebateZones] =
+        useState<OutputDebateZoneList>();
 
     const updateName = async (fullName: string) => {
         const user = await request<User>('PUT', '/users/updateUser', {
@@ -21,9 +30,22 @@ export const ProfileScreen = ({ navigation }) => {
         });
     };
 
+    const getJoinedDebateZones = async () => {
+        return await request<OutputDebateZoneList>('GET', '/debate-zones/list');
+    };
+
+    const onJoinListItemPress = (id: string) => {
+        navigation.navigate('JoinDetailsScreen', {
+            id,
+        });
+    };
+
     useEffect(() => {
         getUser().then(user => {
             setCurrentUser(user);
+        });
+        getJoinedDebateZones().then(debateZoneList => {
+            setJoinedDebateZones(debateZoneList);
         });
     }, []);
 
@@ -34,6 +56,8 @@ export const ProfileScreen = ({ navigation }) => {
                 onPoliticalPreferenceSelected={() => {}}
                 onChangeName={updateName}
                 onLogout={logout}
+                joinedDebateZones={joinedDebateZones}
+                onJoinListItemPress={onJoinListItemPress}
             />
         </>
     );

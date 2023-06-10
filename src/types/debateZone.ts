@@ -47,3 +47,13 @@ export enum Role {
     VIEWER = 'viewer',
     PARTICIPANT = 'participant',
 }
+
+export type OutputDebateZoneListItem = {
+    _id: string;
+    title: string;
+    shortDescription: string;
+};
+
+export type OutputDebateZoneList = {
+    debateZones: OutputDebateZoneListItem[];
+};
