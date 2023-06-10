@@ -146,6 +146,7 @@ export const NewDebateZoneComponent: React.FC<NewDebateZoneComponentProps> = ({
                         />
 
                         <PaperSelect
+                            disabled={true}
                             value={type.value}
                             arrayList={type.list}
                             label={'Type*'}

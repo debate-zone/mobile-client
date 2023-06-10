@@ -4,9 +4,12 @@ import {
     User,
 } from '../../types/user';
 import { PoliticalPreferenceChartComponent } from '../../components/politicalPreference/PoliticalPreferenceChartComponent';
-import { View } from 'react-native';
+import { SafeAreaView, View } from 'react-native';
 import { ProfileDetailsComponent } from '../../components/profile/details/ProfileDetailsComponent';
 import { useEffect, useState } from 'react';
+import { SegmentedButtons } from 'react-native-paper';
+import JoinList from '../../components/UI/joinList/joinList';
+import { OutputDebateZoneList } from '../../types/debateZone';
 
 interface ProfileComponentProps {
     user: User;
@@ -15,19 +18,44 @@ interface ProfileComponentProps {
     ) => void;
     onChangeName: (fullName: string) => void;
     onLogout: () => void;
+    joinedDebateZones: OutputDebateZoneList;
+    onJoinListItemPress: (id: string) => void;
 }
+
+type SegmentButtonValue = 'chart' | 'joinList';
+
+type SegmentButton = {
+    value: SegmentButtonValue;
+    label: string;
+};
+
+const segmentButtons: SegmentButton[] = [
+    {
+        value: 'chart',
+        label: 'Chart',
+    },
+    {
+        value: 'joinList',
+        label: 'Join List',
+    },
+];
 
 export const ProfileComponent: React.FC<ProfileComponentProps> = ({
     user,
     onPoliticalPreferenceSelected,
     onChangeName,
     onLogout,
+    joinedDebateZones,
+    onJoinListItemPress,
 }) => {
     const [name, setName] = useState<string | undefined>();
     const [email, setEmail] = useState<string>();
     const [politicalPreference, setPoliticalPreference] =
         useState<PoliticalPreference>();
     const [image, setImage] = useState<string | undefined>();
+    const [currentSegmentButton, setCurrentSegmentButton] = useState<
+        SegmentButton[]
+    >([segmentButtons.find(button => button.value === 'chart')]);
 
     useEffect(() => {
         if (user) {
@@ -43,8 +71,7 @@ export const ProfileComponent: React.FC<ProfileComponentProps> = ({
             style={{
                 flexDirection: 'column',
                 alignItems: 'center',
-                justifyContent: 'center',
-                marginTop: 20,
+                marginTop: 60,
             }}
         >
             <ProfileDetailsComponent
@@ -55,10 +82,38 @@ export const ProfileComponent: React.FC<ProfileComponentProps> = ({
                 onLogout={onLogout}
             />
 
-            <PoliticalPreferenceChartComponent
-                politicalPreferences={[politicalPreference]}
-                onPoliticalPreferenceSelected={onPoliticalPreferenceSelected}
-            />
+            <SafeAreaView>
+                <SegmentedButtons
+                    style={{
+                        marginTop: 40,
+                        marginBottom: 20,
+                        marginLeft: 20,
+                        marginRight: 20,
+                    }}
+                    value={currentSegmentButton[0]?.value}
+                    onValueChange={value => {
+                        setCurrentSegmentButton([
+                            segmentButtons.find(
+                                button => button.value === value,
+                            ),
+                        ]);
+                    }}
+                    buttons={segmentButtons}
+                />
+                {currentSegmentButton[0]?.value === 'chart' ? (
+                    <PoliticalPreferenceChartComponent
+                        politicalPreferences={[politicalPreference]}
+                        onPoliticalPreferenceSelected={
+                            onPoliticalPreferenceSelected
+                        }
+                    />
+                ) : (
+                    <JoinList
+                        outputDebateZoneList={joinedDebateZones}
+                        onPress={onJoinListItemPress}
+                    />
+                )}
+            </SafeAreaView>
         </View>
     );
 };
