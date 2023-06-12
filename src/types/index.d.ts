@@ -10,4 +10,7 @@ export type RootStackParamList = {
     JoinDetailsScreen: {
         id: string;
     };
+    ActiveScreen: {
+        debateZoneId: string;
+    };
 };

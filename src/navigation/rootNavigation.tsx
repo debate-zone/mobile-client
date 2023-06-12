@@ -2,7 +2,7 @@ import { LoginScreen } from '../screens/loginScreen/LoginScreen';
 import { PoliticalPreferenceScreen } from '../screens/politicalPreference/PoliticalPreferenceScreen';
 import { HomeScreen } from '../screens/homeScreen/HomeScreen';
 import { NewDebateZoneScreen } from '../screens/newDebateZoneScreen/NewDebateZoneScreen';
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import {
     NavigationContainer,
@@ -12,14 +12,22 @@ import BottomBar from '../../src/components/bottomBar/bottomBar';
 import { ProfileScreen } from '../screens/profileScreen/ProfileScreen';
 import { JoinListScreen } from '../screens/joinListScreen/JoinListScreen';
 import { JoinDetailsScreen } from '../screens/joinDetailsScreen/JoinDetailsScreen';
+import { getToken } from '../utils/loginUtils';
 
 const Stack = createNativeStackNavigator();
 
 export default function RootNavigation() {
-    const [tokenPresent, setTokenPresent] = useState<boolean>(false);
+    const [isTokenPresent, setTokenPresent] = useState<boolean>(false);
     const [hideBar, setHideBar] = useState<boolean>(false);
     const navigationRef = useNavigationContainerRef();
     const routeNameRef = useRef<string>();
+
+    useEffect(() => {
+        getToken().then(token => {
+            setTokenPresent(token !== null);
+        });
+    }, [isTokenPresent]);
+
     return (
         <NavigationContainer
             ref={navigationRef}
@@ -51,7 +59,7 @@ export default function RootNavigation() {
                     gestureEnabled: false,
                 }}
                 initialRouteName={
-                    tokenPresent ? HomeScreen.name : LoginScreen.name
+                    isTokenPresent ? HomeScreen.name : LoginScreen.name
                 }
             >
                 <Stack.Screen name={LoginScreen.name} component={LoginScreen} />

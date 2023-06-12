@@ -12,6 +12,7 @@ import { List, Button } from 'react-native-paper';
 import { DatePickerInput, TimePicker } from 'react-native-paper-dates';
 import { PossibleClockTypes } from 'react-native-paper-dates/lib/typescript/Time/timeUtils';
 import Toast from 'react-native-root-toast';
+import { CustomError } from '../../../types/requestResponse';
 
 interface NewDebateZoneComponentProps {
     onSubmit: (newDebateZone: NewDebateZone) => Promise<string>;
@@ -45,7 +46,9 @@ export const NewDebateZoneComponent: React.FC<NewDebateZoneComponentProps> = ({
         error: '',
     });
     const [roundTime, setRoundTime] = useState<number>();
-    const [date, setDate] = useState<Date>();
+    const [date, setDate] = useState<Date>(new Date());
+    const [hours, setHours] = useState<number>(new Date().getHours());
+    const [minutes, setMinutes] = useState<number>(new Date().getMinutes());
     const [isPrivate, setIsPrivate] = useState<boolean>();
     const [isAIReferee, setIsAIReferee] = useState<boolean>();
     const [newParticipantEmail, setNewParticipantEmail] = useState<string>();
@@ -61,6 +64,9 @@ export const NewDebateZoneComponent: React.FC<NewDebateZoneComponentProps> = ({
     const [isSave, setIsSave] = useState<boolean>();
 
     const handleSubmit = () => {
+        date.setHours(hours || 0);
+        date.setMinutes(minutes || 0);
+
         return onSubmit({
             title: title,
             shortDescription: shortDescription,
@@ -122,9 +128,11 @@ export const NewDebateZoneComponent: React.FC<NewDebateZoneComponentProps> = ({
             style={{
                 flex: 1,
                 width: '100%',
+                marginTop: 30,
             }}
         >
             <View
+                key="newDebateZoneForm"
                 style={{
                     flex: 1,
                     margin: 20,
@@ -140,6 +148,7 @@ export const NewDebateZoneComponent: React.FC<NewDebateZoneComponentProps> = ({
                         }}
                     >
                         <TextInput
+                            key="title"
                             style={{
                                 fontSize: 25,
                                 width: '100%',
@@ -151,6 +160,7 @@ export const NewDebateZoneComponent: React.FC<NewDebateZoneComponentProps> = ({
                             onChangeText={setTitle}
                         />
                         <TextInput
+                            key="shortDescription"
                             style={{
                                 width: '100%',
                                 height: 50,
@@ -164,6 +174,7 @@ export const NewDebateZoneComponent: React.FC<NewDebateZoneComponentProps> = ({
                         />
 
                         <PaperSelect
+                            key="type"
                             value={type.value}
                             arrayList={type.list}
                             label={'Type*'}
@@ -187,8 +198,13 @@ export const NewDebateZoneComponent: React.FC<NewDebateZoneComponentProps> = ({
                         }}
                     >
                         <DatePickerInput
+                            key="date"
+                            startYear={new Date().getFullYear()}
+                            endYear={new Date().getFullYear() + 1}
                             value={date}
-                            onChange={(date: Date) => setDate(date)}
+                            onChange={(date: Date) => {
+                                setDate(date);
+                            }}
                             placeholder="Date*"
                             style={{
                                 width: '100%',
@@ -196,27 +212,42 @@ export const NewDebateZoneComponent: React.FC<NewDebateZoneComponentProps> = ({
                                 marginBottom: 10,
                             }}
                             inputMode={'start'}
-                            locale={'en'}
+                            locale="en"
                         />
                         <TimePicker
+                            key="time"
                             onChange={time => {
-                                const dateTime = date ? date : new Date();
-                                dateTime.setHours(time.hours);
-                                dateTime.setMinutes(time.minutes);
-
-                                setDate(dateTime);
+                                if (
+                                    !time &&
+                                    time.hours === 0 &&
+                                    time.minutes === 0
+                                ) {
+                                    return;
+                                } else if (
+                                    time.hours === 0 &&
+                                    time.minutes !== 0
+                                ) {
+                                    setMinutes(time.minutes);
+                                } else if (
+                                    time.hours !== 0 &&
+                                    time.minutes === 0
+                                ) {
+                                    setHours(time.hours);
+                                }
                             }}
                             locale={'en'}
                             inputType={'keyboard'}
                             focused={'hours'}
-                            hours={new Date().getHours() + 1}
-                            minutes={new Date().getMinutes()}
                             onFocusInput={function (type: PossibleClockTypes) {
                                 return;
                             }}
+                            hours={hours}
+                            minutes={minutes}
+                            use24HourClock={true}
                         />
 
                         <TextInput
+                            key="roundTime"
                             style={{
                                 width: '100%',
                                 height: 50,
@@ -247,6 +278,7 @@ export const NewDebateZoneComponent: React.FC<NewDebateZoneComponentProps> = ({
                         }}
                     >
                         <View
+                            key="isPrivate"
                             style={{
                                 flexDirection: 'row',
                                 alignItems: 'center',
@@ -267,6 +299,7 @@ export const NewDebateZoneComponent: React.FC<NewDebateZoneComponentProps> = ({
                         </View>
 
                         <View
+                            key="isPublicChoice"
                             style={{
                                 flexDirection: 'row',
                                 alignItems: 'center',
@@ -289,6 +322,7 @@ export const NewDebateZoneComponent: React.FC<NewDebateZoneComponentProps> = ({
                         </View>
 
                         <View
+                            key="isAIReferee"
                             style={{
                                 flexDirection: 'row',
                                 alignItems: 'center',
@@ -310,6 +344,7 @@ export const NewDebateZoneComponent: React.FC<NewDebateZoneComponentProps> = ({
                             </Text>
                         </View>
                         <View
+                            key="isSave"
                             style={{
                                 flexDirection: 'row',
                                 alignItems: 'center',
@@ -331,6 +366,7 @@ export const NewDebateZoneComponent: React.FC<NewDebateZoneComponentProps> = ({
                     </View>
 
                     <View
+                        key="participants"
                         style={{
                             marginTop: 15,
                             flex: 1,
@@ -368,6 +404,16 @@ export const NewDebateZoneComponent: React.FC<NewDebateZoneComponentProps> = ({
                                     <List.Item
                                         key={index}
                                         title={`${participant.email} | ${participant.role}`}
+                                        onPress={() => {
+                                            setNewParticipantEmail(
+                                                participant.email,
+                                            );
+                                            setParticipants(
+                                                participants.filter(
+                                                    (p, i) => i !== index,
+                                                ),
+                                            );
+                                        }}
                                     />
                                 ))}
 
@@ -459,10 +505,17 @@ export const NewDebateZoneComponent: React.FC<NewDebateZoneComponentProps> = ({
                         onPress={() => {
                             handleSubmit()
                                 .then(() => clearForm())
-                                .catch(error => {
+                                .catch((error: CustomError) => {
                                     Toast.show(error.message, {
-                                        duration: Toast.durations.LONG,
+                                        duration: 2000,
+                                        position: Toast.positions.CENTER,
+                                        textStyle: {
+                                            fontSize: 20,
+                                            color: 'red',
+                                        },
                                     });
+                                    // todo handle error
+                                    console.log(error.messages);
                                 });
                         }}
                     >

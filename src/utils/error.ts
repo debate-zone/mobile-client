@@ -1,7 +1,10 @@
 import { log } from './logger';
+import { CustomError, ErrorBody } from '../types/requestResponse';
 
-export const createError = (message: string, e?: any) => {
-    message = `${message}: ${e.message || e.details}`;
+export const createError = (
+    message: string,
+    messages?: ErrorBody['error']['message'],
+) => {
     log.error(message);
-    return new Error(message);
+    return new CustomError(message, messages);
 };

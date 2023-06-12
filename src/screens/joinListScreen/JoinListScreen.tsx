@@ -22,9 +22,18 @@ export const JoinListScreen = ({ navigation }: RootScreenProps) => {
     };
 
     const onItemPress = (id: string) => {
-        navigation.navigate('JoinDetailsScreen', {
-            id: id,
-        });
+        const isLive = outputDebateZoneList.debateZones.find(
+            x => x._id === id,
+        ).isLive;
+        if (isLive) {
+            navigation.navigate('ActiveScreen', {
+                debateZoneId: id,
+            });
+        } else {
+            navigation.navigate('JoinDetailsScreen', {
+                id: id,
+            });
+        }
     };
 
     useEffect(() => {
