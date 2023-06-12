@@ -31,7 +31,10 @@ export const ProfileScreen = ({ navigation }: RootScreenProps) => {
     };
 
     const getJoinedDebateZones = async () => {
-        return await request<OutputDebateZoneList>('GET', '/debate-zones/list');
+        return await request<OutputDebateZoneList>(
+            'GET',
+            '/debate-zones/profile/list',
+        );
     };
 
     const onJoinListItemPress = (id: string) => {

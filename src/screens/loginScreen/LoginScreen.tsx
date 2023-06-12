@@ -12,25 +12,27 @@ interface RootScreenProps {
 
 export const LoginScreen = ({ navigation }: RootScreenProps) => {
     const toNext = async () => {
-        let user: User = undefined;
+        setTimeout(async () => {
+            let user: User = undefined;
 
-        try {
-            user = await request<User>('POST', '/auth/login');
-            console.log('user:', user);
-            await saveUser(user);
-        } catch (e) {
-            console.log(e.message);
-            Toast.show('Login failed', {
-                duration: Toast.durations.LONG,
-            });
-            return;
-        }
+            try {
+                user = await request<User>('POST', '/auth/login');
+                console.log('user:', user);
+                await saveUser(user);
+            } catch (e) {
+                console.log(e.message);
+                Toast.show('Login failed', {
+                    duration: Toast.durations.LONG,
+                });
+                return;
+            }
 
-        if (user?.politicalPreference) {
-            navigation.navigate('HomeScreen');
-        } else {
-            navigation.navigate('PoliticalPreferenceScreen');
-        }
+            if (user?.politicalPreference) {
+                navigation.navigate('HomeScreen');
+            } else {
+                navigation.navigate('PoliticalPreferenceScreen');
+            }
+        }, 1000);
     };
 
     return (

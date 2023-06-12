@@ -3,6 +3,12 @@ export type CreatedParticipant = {
     role: string;
 };
 
+export type Round = {
+    time: number;
+    activeUserId: string;
+    _id: string;
+};
+
 export type CreatedDebateZone = {
     _id: string;
     isDeleted: boolean;
@@ -10,14 +16,18 @@ export type CreatedDebateZone = {
     updatedAt: string;
     userId: string;
     title: string;
+    rounds: Round[];
     shortDescription: string;
     type: Type;
-    date: string;
+    date: Date;
     isPrivate: boolean;
     isAIReferee: boolean;
     isPublicChoice: boolean;
     participants: CreatedParticipant[];
     isSave: boolean;
+    isTimeExpired: boolean;
+    isAlreadyJoined: boolean;
+    isAlreadyFinished: boolean;
 };
 
 export type NewParticipant = {
@@ -52,6 +62,7 @@ export type OutputDebateZoneListItem = {
     _id: string;
     title: string;
     shortDescription: string;
+    isLive: boolean;
 };
 
 export type OutputDebateZoneList = {

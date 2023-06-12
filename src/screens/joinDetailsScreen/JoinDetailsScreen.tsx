@@ -2,11 +2,8 @@ import { NativeStackNavigationProp } from 'react-native-screens/native-stack';
 import { RootStackParamList } from '../../types';
 import { View } from 'react-native';
 import { request } from '../../apiClient/apiClient';
-import {
-    CreatedDebateZone,
-    OutputDebateZoneListItem,
-} from '../../types/debateZone';
-import { JoinDetailsComponent } from '../../components/debateZone/joinDetails/JoinDetailsComponent';
+import { CreatedDebateZone } from '../../types/debateZone';
+import { JoinDetailsComponent } from '../../components/debateZone/joinDetails/joinDetailsComponent';
 import { useEffect, useState } from 'react';
 
 interface RootScreenProps {

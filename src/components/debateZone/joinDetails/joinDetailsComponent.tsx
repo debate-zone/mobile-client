@@ -1,7 +1,7 @@
-import { Image, TouchableOpacity, View } from 'react-native';
+import { Image, StyleSheet, TouchableOpacity, View } from 'react-native';
 import { CreatedDebateZone } from '../../../types/debateZone';
 import { Text } from 'react-native-paper';
-import React from 'react';
+import React, { useEffect } from 'react';
 import Toast from 'react-native-root-toast';
 
 interface JoinDetailsProps {
@@ -13,6 +13,46 @@ export const JoinDetailsComponent = ({
     debateZone,
     onJoin,
 }: JoinDetailsProps) => {
+    const [isJoinDisabled, setIsJoinDisabled] = React.useState<boolean>();
+
+    const calculateTimeToStart = (date?: Date) => {
+        const now = new Date();
+        const timeToStart = new Date(date || now);
+        if (timeToStart.getTime() - now.getTime() < 24 * 60 * 60 * 1000) {
+            return timeToStart.toLocaleTimeString('en-US', {
+                hour: '2-digit',
+                minute: '2-digit',
+            });
+        } else {
+            return timeToStart.toLocaleDateString('en-US', {
+                month: 'short',
+                day: 'numeric',
+            });
+        }
+    };
+
+    const getJoinButtonText = () => {
+        if (debateZone?.isAlreadyJoined) {
+            return 'Joined';
+        } else if (debateZone?.isTimeExpired) {
+            return 'Time expired';
+        } else if (debateZone?.isAlreadyFinished) {
+            return 'Finished';
+        } else {
+            return `Join for ${calculateTimeToStart(debateZone?.date)}`;
+        }
+    };
+
+    useEffect(() => {
+        if (debateZone) {
+            setIsJoinDisabled(
+                debateZone.isAlreadyFinished ||
+                    debateZone.isAlreadyJoined ||
+                    debateZone.isTimeExpired,
+            );
+        }
+    }, [debateZone, isJoinDisabled]);
+
     return (
         <View
             style={{
@@ -72,6 +112,7 @@ export const JoinDetailsComponent = ({
             </View>
 
             <TouchableOpacity
+                disabled={isJoinDisabled}
                 onPress={() => {
                     onJoin().then(debateZone => {
                         Toast.show("You've joined the debate zone!", {
@@ -90,7 +131,7 @@ export const JoinDetailsComponent = ({
                         height: 66,
                         alignSelf: 'center',
                         alignItems: 'center',
-                        backgroundColor: '#14213D',
+                        backgroundColor: isJoinDisabled ? '#676767' : '#1f3c62',
                         flexDirection: 'row',
                         borderRadius: 21,
                         padding: 20,
@@ -101,18 +142,21 @@ export const JoinDetailsComponent = ({
                         resizeMode={'contain'}
                         style={{ height: 39, width: 36 }}
                     />
-                    <Text
-                        style={{
-                            fontSize: 20,
-                            alignSelf: 'center',
-                            marginLeft: 13,
-                            color: '#FFFFFF',
-                        }}
-                    >
-                        Join
+
+                    <Text style={styles.btnTextJoin}>
+                        {getJoinButtonText()}
                     </Text>
                 </View>
             </TouchableOpacity>
         </View>
     );
 };
+
+const styles = StyleSheet.create({
+    btnTextJoin: {
+        fontSize: 20,
+        alignSelf: 'center',
+        marginLeft: 13,
+        color: '#ffffff',
+    },
+});

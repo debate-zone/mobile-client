@@ -2,35 +2,38 @@ import { getToken, Token } from '../utils/loginUtils';
 // @ts-ignore
 import { API_URL } from '@env';
 import { createError } from '../utils/error';
+import { CustomError, Method, SuccessBody } from '../types/requestResponse';
 
-type ErrorBody = {
-    status: string;
-    error: {
-        message: string;
-    };
+async function formatError(response: Response) {
+    const errorUnclearBody = await response.text();
+    const errorBody = JSON.parse(errorUnclearBody);
+    const objectErrorBodyMessages = JSON.parse(errorBody.error.message);
+
+    let message = '';
+    objectErrorBodyMessages.forEach(errorBodyMessage => {
+        message += `${errorBodyMessage.path.join(' ')}: ${
+            errorBodyMessage.message
+        }\n`;
+    });
+    throw new CustomError(message, objectErrorBodyMessages);
+}
+
+const getAuthHeaders = async () => {
+    const token: Token | null = await getToken();
+
+    if (token) {
+        return {
+            Authorization: `Bearer ${token.token}`,
+            'X-Auth-Provider': token.tokenProvider,
+        };
+    } else {
+        throw new CustomError('No token found');
+    }
 };
-
-type SuccessBody<T> = {
-    status: string;
-    data: T;
-};
-
-type Method = 'GET' | 'POST' | 'PUT' | 'DELETE';
 
 export async function request<T>(method: Method, path: string, body?: any) {
     try {
-        const token: Token | null = await getToken();
-
-        let authHeaders = undefined;
-
-        if (token) {
-            authHeaders = {
-                Authorization: `Bearer ${token.token}`,
-                'X-Auth-Provider': token.tokenProvider,
-            };
-        } else {
-            throw createError('No token found');
-        }
+        const authHeaders = await getAuthHeaders();
 
         const response = await fetch(API_URL + path, {
             method,
@@ -44,10 +47,9 @@ export async function request<T>(method: Method, path: string, body?: any) {
         if (response.ok) {
             return ((await response.json()) as SuccessBody<T>).data;
         } else {
-            const errorBody: ErrorBody = (await response.json()) as ErrorBody;
-            throw createError(errorBody.error.message);
+            await formatError(response);
         }
     } catch (error) {
-        throw createError('API request failed.', error);
+        throw createError(error.message, error.messages);
     }
 }
