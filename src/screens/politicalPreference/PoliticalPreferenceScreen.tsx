@@ -25,7 +25,7 @@ export const PoliticalPreferenceScreen = ({ navigation }: RootScreenProps) => {
     const onPoliticalPreferenceSelected = async (
         politicalPreference: PoliticalPreferenceEnum,
     ) => {
-        const user: User = await request<User>('PUT', '/users/updateUser', {
+        const user: User = await request<User>('PUT', '/user/v1/users/update', {
             politicalPreference,
         });
 
@@ -43,7 +43,7 @@ export const PoliticalPreferenceScreen = ({ navigation }: RootScreenProps) => {
     const retrievePoliticalPreferences = async () => {
         const politicalPreferences = await request<{
             politicalPreferences: PoliticalPreference[];
-        }>('GET', '/users/politicalPreferences/list');
+        }>('GET', '/user/v1/users/political-preferences/list');
 
         return politicalPreferences.politicalPreferences;
     };

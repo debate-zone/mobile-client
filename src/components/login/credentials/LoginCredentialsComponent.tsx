@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { getToken, saveToken } from '../../../utils/loginUtils';
 import { TokenProviderEnum } from '../../../enums/TokenProvider';
-import {Button, TextInput, TouchableOpacity, View, Text} from 'react-native';
+import { Button, TextInput, TouchableOpacity, View, Text } from 'react-native';
 import { request } from '../../../apiClient/apiClient';
 import Toast from 'react-native-root-toast';
 
@@ -14,7 +14,8 @@ export type OutputLoginCredentialsUser = {
 };
 
 export const LoginCredentialsComponent = (
-    loginComponentProps: LoginComponentProps, props
+    loginComponentProps: LoginComponentProps,
+    props,
 ) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -24,7 +25,7 @@ export const LoginCredentialsComponent = (
             const outputLoginCredentialsUser: OutputLoginCredentialsUser =
                 await request<OutputLoginCredentialsUser>(
                     'POST',
-                    '/auth/login-with-credentials',
+                    '/user/v1/auth/login-with-credentials',
                     variables,
                 );
 
@@ -53,54 +54,79 @@ export const LoginCredentialsComponent = (
         >
             <TextInput
                 style={{
+                    backgroundColor: '#ffffff',
+                    shadowOffset: { width: 0, height: 2 },
+                    shadowOpacity: 0.2,
+                    shadowRadius: 2,
+                    elevation: 1,
+                    marginTop: 15,
                     width: '66%',
                     height: 40,
                     borderColor: 'gray',
                     borderWidth: 1,
                     borderRadius: 21,
                     paddingHorizontal: 10,
-                    marginBottom: 2
+                    marginBottom: 2,
                 }}
                 placeholder="Email"
                 onChangeText={text => setEmail(text)}
                 value={email}
             />
+
             <TextInput
                 style={{
+                    backgroundColor: '#ffffff',
+                    shadowOffset: { width: 0, height: 2 },
+                    shadowOpacity: 0.2,
+                    shadowRadius: 2,
+                    elevation: 1,
+                    marginTop: 15,
                     width: '66%',
                     height: 40,
                     borderColor: 'gray',
                     borderWidth: 1,
                     borderRadius: 21,
                     paddingHorizontal: 10,
-                    marginBottom: 2
+                    marginBottom: 2,
                 }}
                 placeholder="Password"
                 onChangeText={text => setPassword(text)}
                 value={password}
                 secureTextEntry={true}
             />
-            {/*<Button*/}
-            {/*    title="Login"*/}
-            {/*    onPress={() => {*/}
-            {/*        login({*/}
-            {/*            email: email,*/}
-            {/*            password: password,*/}
-            {/*        });*/}
-            {/*    }}*/}
-            {/*/>*/}
 
             <TouchableOpacity
-                style={{backgroundColor: 'gray', borderRadius: 15, height: 50, width: 103, justifyContent: 'center',
-                alignItems: 'center', marginTop: 3}}
-                onPress={() =>{
+                style={{
+                    backgroundColor: '#ffffff',
+                    shadowOffset: { width: 0, height: 2 },
+                    shadowOpacity: 0.2,
+                    shadowRadius: 2,
+                    elevation: 1,
+                    borderRadius: 21,
+                    height: 50,
+                    width: 103,
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    marginTop: 15,
+                }}
+                onPress={() => {
                     login({
                         email: email,
-                        password: password
-                    })
-                } }
+                        password: password,
+                    });
+                }}
             >
-                <Text style={{justifyContent: 'center', alignItems: 'center' }}>Login</Text>
+                <Text
+                    style={{
+                        color: '#717171',
+                        fontSize: 17,
+                        fontWeight: 'bold',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                    }}
+                >
+                    Login
+                </Text>
             </TouchableOpacity>
         </View>
     );

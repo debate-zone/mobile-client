@@ -17,7 +17,7 @@ export const NewDebateZoneScreen = ({ navigation }: RootScreenProps) => {
         const createdDebateZone: CreatedDebateZone =
             await request<CreatedDebateZone>(
                 'POST',
-                '/debate-zones/create',
+                '/debate-zone/v1/debate-zones/create',
                 data,
             );
 

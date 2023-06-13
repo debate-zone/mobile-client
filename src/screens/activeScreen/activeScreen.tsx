@@ -16,7 +16,7 @@ export const ActiveScreen = ({ navigation, route }: RootScreenProps) => {
     const getDebateZoneById = () => {
         return request<CreatedDebateZone>(
             'GET',
-            `/debate-zones/active/details?id=${route.props.debateZoneId}`,
+            `/debate-zone/v1/debate-zones/active/details?id=${route.props.debateZoneId}`,
         );
     };
 

@@ -23,7 +23,8 @@ const JoinList: React.FC<JoinListProps> = ({
                         <JoinItem
                             id={item._id}
                             title={item.title}
-                            shortDescription={item.shortDescription}
+                            date={item.date}
+                            isPrivate={item.isPrivate}
                             onPress={onPress}
                         />
                     )}

@@ -16,11 +16,9 @@ export const LoginScreen = ({ navigation }: RootScreenProps) => {
             let user: User = undefined;
 
             try {
-                user = await request<User>('POST', '/auth/login');
-                console.log('user:', user);
+                user = await request<User>('POST', '/user/v1/auth/login');
                 await saveUser(user);
             } catch (e) {
-                console.log(e.message);
                 Toast.show('Login failed', {
                     duration: Toast.durations.LONG,
                 });

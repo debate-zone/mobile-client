@@ -24,6 +24,7 @@ export default function RootNavigation() {
 
     useEffect(() => {
         getToken().then(token => {
+            console.log('token', token);
             setTokenPresent(token !== null);
         });
     }, [isTokenPresent]);
@@ -83,6 +84,8 @@ export default function RootNavigation() {
                 <Stack.Screen
                     options={{
                         headerShown: true,
+                        headerTintColor: '#fff',
+                        headerTransparent: true,
                         gestureEnabled: true,
                         headerTitle: '',
                     }}

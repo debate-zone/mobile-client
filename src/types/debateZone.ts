@@ -62,6 +62,8 @@ export type OutputDebateZoneListItem = {
     _id: string;
     title: string;
     shortDescription: string;
+    date: Date;
+    isPrivate: boolean;
     isLive: boolean;
 };
 
