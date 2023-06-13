@@ -3,7 +3,6 @@ import { StyleSheet, View, TouchableOpacity, Image, Text } from 'react-native';
 import HomeSvg from '../../../src/components/svgIcons/home';
 import ProfileSvg from '../../../src/components/svgIcons/profile';
 import CreateSvg from '../../../src/components/svgIcons/create';
-import { Icon } from '@expo/webpack-config/webpack/plugins/PwaManifestWebpackPlugin';
 import { useNavigation } from '@react-navigation/native';
 import { HomeScreen } from '../../../src/screens/homeScreen/HomeScreen';
 
@@ -67,7 +66,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         backgroundColor: 'black',
         width: '100%',
-        height: 66,
+        height: 77,
         justifyContent: 'space-evenly',
     },
     IconBehave: {

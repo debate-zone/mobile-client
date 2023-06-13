@@ -20,7 +20,7 @@ export const JoinDetailsScreen = ({ navigation, route }: RootScreenProps) => {
     const getDebateZoneById = async () => {
         const debateZone = await request<CreatedDebateZone>(
             'GET',
-            `/debate-zones/details?id=${route.params.id}`,
+            `/debate-zone/v1/debate-zones/details?id=${route.params.id}`,
         );
         return debateZone;
     };
@@ -28,7 +28,7 @@ export const JoinDetailsScreen = ({ navigation, route }: RootScreenProps) => {
     const joinDebateZone = async () => {
         const debateZone = await request<CreatedDebateZone>(
             'POST',
-            `/debate-zones/join`,
+            `/debate-zone/v1/debate-zones/join`,
             {
                 id: route.params.id,
             },
@@ -47,6 +47,7 @@ export const JoinDetailsScreen = ({ navigation, route }: RootScreenProps) => {
     return (
         <View
             style={{
+                paddingTop: 60,
                 backgroundColor: '#A9BBE2',
                 width: '100%',
                 height: '100%',

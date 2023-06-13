@@ -9,11 +9,15 @@ interface JoinDetailsProps {
     onJoin: () => Promise<CreatedDebateZone>;
 }
 
-export const JoinDetailsComponent = ({
-    debateZone,
-    onJoin,
-}: JoinDetailsProps) => {
+export const JoinDetailsComponent = (props: JoinDetailsProps) => {
+    const [debateZone, setDebateZone] = React.useState<
+        CreatedDebateZone | undefined
+    >(props.debateZone);
     const [isJoinDisabled, setIsJoinDisabled] = React.useState<boolean>();
+
+    useEffect(() => {
+        setDebateZone(props.debateZone);
+    }, [props.debateZone]);
 
     const calculateTimeToStart = (date?: Date) => {
         const now = new Date();
@@ -108,13 +112,22 @@ export const JoinDetailsComponent = ({
                     >
                         {debateZone?.shortDescription}
                     </Text>
+                    <Text
+                        style={{
+                            fontSize: 16,
+                            marginTop: 20,
+                        }}
+                    >
+                        {debateZone ? debateZone.date.toLocaleString() : ''}
+                    </Text>
                 </View>
             </View>
 
             <TouchableOpacity
                 disabled={isJoinDisabled}
                 onPress={() => {
-                    onJoin().then(debateZone => {
+                    props.onJoin().then(debateZone => {
+                        setDebateZone(debateZone);
                         Toast.show("You've joined the debate zone!", {
                             duration: Toast.durations.LONG,
                             position: Toast.positions.CENTER,

@@ -1,6 +1,7 @@
 import { VictoryChart, VictoryLabel, VictoryScatter } from 'victory-native';
 import { PoliticalPreferenceEnum } from '../../types/user';
 import React, { useEffect, useState } from 'react';
+import { Dimensions } from 'react-native';
 
 interface PoliticalPreferenceChartComponentProps {
     politicalPreferences: any[];
@@ -57,15 +58,15 @@ export const PoliticalPreferenceChartComponent: React.FC<
                     style: {
                         labels: {
                             fill: '#d98607',
-                            fontSize: 15,
+                            fontSize: 20,
                             borderRadius: 10,
                         },
                     },
                 },
             }}
             domain={{ x: [-15, 15], y: [-15, 15] }}
-            width={400}
-            height={400}
+            width={Dimensions.get('window').width}
+            height={Dimensions.get('window').height / 2}
         >
             <VictoryScatter
                 data={dataPoints}

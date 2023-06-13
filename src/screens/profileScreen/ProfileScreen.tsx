@@ -17,7 +17,7 @@ export const ProfileScreen = ({ navigation }: RootScreenProps) => {
         useState<OutputDebateZoneList>();
 
     const updateName = async (fullName: string) => {
-        const user = await request<User>('PUT', '/users/updateUser', {
+        const user = await request<User>('PUT', '/user/v1/users/update', {
             fullName: fullName,
         });
         await saveUser(user);
@@ -33,7 +33,7 @@ export const ProfileScreen = ({ navigation }: RootScreenProps) => {
     const getJoinedDebateZones = async () => {
         return await request<OutputDebateZoneList>(
             'GET',
-            '/debate-zones/profile/list',
+            '/debate-zone/v1/debate-zones/profile/list',
         );
     };
 

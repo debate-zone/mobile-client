@@ -22,7 +22,7 @@ interface ProfileComponentProps {
     onJoinListItemPress: (id: string) => void;
 }
 
-type SegmentButtonValue = 'chart' | 'joinList';
+type SegmentButtonValue = 'chart' | 'joinedList';
 
 type SegmentButton = {
     value: SegmentButtonValue;
@@ -35,8 +35,8 @@ const segmentButtons: SegmentButton[] = [
         label: 'Chart',
     },
     {
-        value: 'joinList',
-        label: 'Join List',
+        value: 'joinedList',
+        label: 'Joined',
     },
 ];
 
@@ -82,11 +82,15 @@ export const ProfileComponent: React.FC<ProfileComponentProps> = ({
                 onLogout={onLogout}
             />
 
-            <SafeAreaView>
+            <SafeAreaView
+                style={{
+                    marginTop: 20,
+                    width: '100%',
+                    height: '100%',
+                }}
+            >
                 <SegmentedButtons
                     style={{
-                        marginTop: 40,
-                        marginBottom: 20,
                         marginLeft: 20,
                         marginRight: 20,
                     }}
@@ -100,19 +104,25 @@ export const ProfileComponent: React.FC<ProfileComponentProps> = ({
                     }}
                     buttons={segmentButtons}
                 />
-                {currentSegmentButton[0]?.value === 'chart' ? (
-                    <PoliticalPreferenceChartComponent
-                        politicalPreferences={[politicalPreference]}
-                        onPoliticalPreferenceSelected={
-                            onPoliticalPreferenceSelected
-                        }
-                    />
-                ) : (
-                    <JoinList
-                        outputDebateZoneList={joinedDebateZones}
-                        onPress={onJoinListItemPress}
-                    />
-                )}
+                <View
+                    style={{
+                        marginTop: -10,
+                    }}
+                >
+                    {currentSegmentButton[0]?.value === 'chart' ? (
+                        <PoliticalPreferenceChartComponent
+                            politicalPreferences={[politicalPreference]}
+                            onPoliticalPreferenceSelected={
+                                onPoliticalPreferenceSelected
+                            }
+                        />
+                    ) : (
+                        <JoinList
+                            outputDebateZoneList={joinedDebateZones}
+                            onPress={onJoinListItemPress}
+                        />
+                    )}
+                </View>
             </SafeAreaView>
         </View>
     );

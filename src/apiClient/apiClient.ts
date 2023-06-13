@@ -27,7 +27,7 @@ const getAuthHeaders = async () => {
             'X-Auth-Provider': token.tokenProvider,
         };
     } else {
-        throw new CustomError('No token found');
+        return {};
     }
 };
 

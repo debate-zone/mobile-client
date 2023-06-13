@@ -11,14 +11,16 @@ import JoinItemBtnSvg from '../../svgIcons/joinItemBtn';
 export type JoinItemProps = {
     id?: string;
     title?: string;
-    shortDescription?: string;
+    date?: Date;
+    isPrivate?: boolean;
     onPress?: (id: string) => void;
 };
 
 const JoinItem: React.FC<JoinItemProps> = ({
     id,
     title,
-    shortDescription,
+    date,
+    isPrivate,
     onPress,
 }) => {
     return (
@@ -32,12 +34,25 @@ const JoinItem: React.FC<JoinItemProps> = ({
                     {title}
                 </Text>
                 <Text
-                    key={`card-content-shortDescription-${id}`}
-                    numberOfLines={2}
+                    key={`card-content-description-${id}`}
+                    numberOfLines={1}
                     ellipsizeMode="tail"
                 >
-                    {shortDescription}
+                    {date && date.toString()}
                 </Text>
+                <View key={`card-private-${id}`}>
+                    {isPrivate && (
+                        <Text
+                            style={{
+                                marginTop: 5,
+                                color: 'red',
+                            }}
+                            key={`card-private-text-${id}`}
+                        >
+                            Private
+                        </Text>
+                    )}
+                </View>
             </View>
             <TouchableOpacity
                 onPress={() => {

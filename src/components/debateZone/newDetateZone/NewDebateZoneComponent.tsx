@@ -223,15 +223,11 @@ export const NewDebateZoneComponent: React.FC<NewDebateZoneComponentProps> = ({
                                     time.minutes === 0
                                 ) {
                                     return;
-                                } else if (
-                                    time.hours === 0 &&
-                                    time.minutes !== 0
-                                ) {
+                                }
+                                if (time.minutes !== 0) {
                                     setMinutes(time.minutes);
-                                } else if (
-                                    time.hours !== 0 &&
-                                    time.minutes === 0
-                                ) {
+                                }
+                                if (time.hours !== 0) {
                                     setHours(time.hours);
                                 }
                             }}
@@ -255,12 +251,9 @@ export const NewDebateZoneComponent: React.FC<NewDebateZoneComponentProps> = ({
                                 fontSize: 20,
                             }}
                             placeholder="Round time (in minutes)*"
-                            value={
-                                roundTime
-                                    ? `Round time (in minutes): ${roundTime.toString()}`
-                                    : ''
-                            }
+                            value={roundTime ? roundTime.toString() : undefined}
                             keyboardType="numeric"
+                            maxLength={2}
                             onChangeText={(text: string) => {
                                 if (parseInt(text) < 0) {
                                     return;

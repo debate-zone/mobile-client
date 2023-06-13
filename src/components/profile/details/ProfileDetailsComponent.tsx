@@ -1,6 +1,6 @@
 import { Avatar, TextInput, Text, Button } from 'react-native-paper';
 import { View } from 'react-native';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { AvatarImageSource } from 'react-native-paper/lib/typescript/src/components/Avatar/AvatarImage';
 
 interface ProfileDetailsComponentProps {
@@ -48,7 +48,7 @@ export const ProfileDetailsComponent = (
                             marginBottom: 15,
                         }}
                         label="Name"
-                        value={name || props.name}
+                        value={name}
                         onChangeText={text => {
                             setName(text);
                         }}
@@ -73,6 +73,7 @@ export const ProfileDetailsComponent = (
                 <Button
                     style={{
                         marginTop: 20,
+                        alignSelf: 'flex-end',
                     }}
                     mode="contained"
                     onPress={props.onLogout}

@@ -16,7 +16,7 @@ export const JoinListScreen = ({ navigation }: RootScreenProps) => {
     const getDebateZones = async () => {
         const debateZones = await request<OutputDebateZoneList>(
             'GET',
-            '/debate-zones/list',
+            '/debate-zone/v1/debate-zones/list',
         );
         return debateZones;
     };
