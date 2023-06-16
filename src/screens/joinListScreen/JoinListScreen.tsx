@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { NativeStackNavigationProp } from 'react-native-screens/native-stack';
 import { RootStackParamList } from '../../types';
 import JoinList from '../../../src/components/UI/joinList/joinList';
@@ -24,7 +24,8 @@ export const JoinListScreen = ({ navigation }: RootScreenProps) => {
     const onItemPress = (id: string) => {
         const isLive = outputDebateZoneList.debateZones.find(
             x => x._id === id,
-        ).isLive;
+        )?.isLive;
+
         if (isLive) {
             navigation.navigate('ActiveScreen', {
                 debateZoneId: id,

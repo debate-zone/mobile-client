@@ -1,7 +1,7 @@
 import { useState } from 'react';
-import { getToken, saveToken } from '../../../utils/loginUtils';
+import { saveToken } from '../../../utils/loginUtils';
 import { TokenProviderEnum } from '../../../enums/TokenProvider';
-import { Button, TextInput, TouchableOpacity, View, Text } from 'react-native';
+import { TextInput, TouchableOpacity, View, Text } from 'react-native';
 import { request } from '../../../apiClient/apiClient';
 import Toast from 'react-native-root-toast';
 
@@ -69,6 +69,8 @@ export const LoginCredentialsComponent = (
                     marginBottom: 2,
                 }}
                 placeholder="Email"
+                autoCorrect={false}
+                keyboardType="email-address"
                 onChangeText={text => setEmail(text)}
                 value={email}
             />

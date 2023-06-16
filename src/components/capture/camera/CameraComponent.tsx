@@ -164,7 +164,7 @@ const CameraComponent = () => {
             >
                 {/*todo separate to dif component*/}
                 <Animated.Image
-                    source={assets[0]}
+                    source={assets && assets[0]}
                     style={{
                         transform: [
                             { translateX: faceAnimation.x },
@@ -180,14 +180,14 @@ const CameraComponent = () => {
                         ],
                     }}
                 />
-                <View style={styles.buttonContainer}>
-                    <TouchableOpacity
-                        style={styles.button}
-                        onPress={toggleCameraType}
-                    >
-                        <Text style={styles.text}>Flip Camera</Text>
-                    </TouchableOpacity>
-                </View>
+                {/*<View style={styles.buttonContainer}>*/}
+                {/*    <TouchableOpacity*/}
+                {/*        style={styles.button}*/}
+                {/*        onPress={toggleCameraType}*/}
+                {/*    >*/}
+                {/*        <Text style={styles.text}>Flip Camera</Text>*/}
+                {/*    </TouchableOpacity>*/}
+                {/*</View>*/}
             </Camera>
         </View>
     );

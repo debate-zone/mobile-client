@@ -6,6 +6,7 @@ export type CreatedParticipant = {
 export type Round = {
     time: number;
     activeUserId: string;
+    isFinished: boolean;
     _id: string;
 };
 
@@ -28,6 +29,7 @@ export type CreatedDebateZone = {
     isTimeExpired: boolean;
     isAlreadyJoined: boolean;
     isAlreadyFinished: boolean;
+    isLive: boolean;
 };
 
 export type NewParticipant = {
@@ -69,4 +71,31 @@ export type OutputDebateZoneListItem = {
 
 export type OutputDebateZoneList = {
     debateZones: OutputDebateZoneListItem[];
+};
+
+export type Comment = {
+    _id: string;
+    debateZoneId: string;
+    userId: string;
+    userFirstName: string;
+    toUserId: string;
+    toUserFirstName: string;
+    text: string;
+    createdAt: string;
+    updatedAt: string;
+};
+
+export type OutputComment = Comment;
+
+export type NewComment = Omit<
+    Comment,
+    '_id' | 'createdAt' | 'updatedAt' | 'userId'
+>;
+
+export type DeletedComment = Comment & {
+    isDeleted: boolean;
+};
+
+export type OutputCommentList = {
+    comments: OutputComment[];
 };

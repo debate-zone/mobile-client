@@ -13,6 +13,7 @@ import { ProfileScreen } from '../screens/profileScreen/ProfileScreen';
 import { JoinListScreen } from '../screens/joinListScreen/JoinListScreen';
 import { JoinDetailsScreen } from '../screens/joinDetailsScreen/JoinDetailsScreen';
 import { getToken } from '../utils/loginUtils';
+import { ActiveScreen } from '../screens/activeScreen/activeScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -92,6 +93,7 @@ export default function RootNavigation() {
                     name={'JoinDetailsScreen'}
                     component={JoinDetailsScreen}
                 />
+                <Stack.Screen name={'ActiveScreen'} component={ActiveScreen} />
             </Stack.Navigator>
             {hideBar && <BottomBar />}
         </NavigationContainer>
