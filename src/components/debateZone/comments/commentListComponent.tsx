@@ -32,6 +32,7 @@ export const CommentListComponent = ({
                         minIndexForVisible: 0,
                         autoscrollToTopThreshold: 0,
                     }}
+                    inverted={true}
                     style={{
                         width: '100%',
                         height: '100%',

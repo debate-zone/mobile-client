@@ -30,7 +30,7 @@ export const CommentItemComponent = ({
                     color: 'white',
                 }}
             >
-                {comment.userFirstName}: {comment.text}
+                {comment.userFullName}: {comment.text}
             </Text>
             <View
                 style={{
