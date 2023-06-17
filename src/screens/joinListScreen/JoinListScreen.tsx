@@ -14,17 +14,15 @@ export const JoinListScreen = ({ navigation }: RootScreenProps) => {
         useState<OutputDebateZoneList>(undefined);
 
     const getDebateZones = async () => {
-        const debateZones = await request<OutputDebateZoneList>(
+        return await request<OutputDebateZoneList>(
             'GET',
             '/debate-zone/v1/debate-zones/list',
         );
-        return debateZones;
     };
 
     const onItemPress = (id: string) => {
-        const isLive = outputDebateZoneList.debateZones.find(
-            x => x._id === id,
-        )?.isLive;
+        const isLive = !outputDebateZoneList.debateZones.find(x => x._id === id)
+            ?.isLive;
 
         if (isLive) {
             navigation.navigate('ActiveScreen', {

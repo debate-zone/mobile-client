@@ -9,12 +9,14 @@ import { TimeComponent } from '../../../components/debateZone/time/timeComponent
 import { ShortDescriptionComponent } from '../../../components/debateZone/shortDescription/shortDescriptionComponent';
 import { StreamComponent } from '../../../components/debateZone/stream/streamComponent';
 import CameraComponent from '../../../components/capture/camera/CameraComponent';
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { getUser } from '../../../utils/loginUtils';
 import { CommentListComponent } from '../../../components/debateZone/comments/commentListComponent';
 import { LiveLabelComponent } from '../../../components/debateZone/liveLabel/liveLabelComponent';
 import { MicrophoneLabelComponent } from '../../../components/debateZone/microphone/microphoneLabelComponent';
 import { VideoLabelComponent } from '../../../components/debateZone/camera/videoLabelComponent';
+import { LoveLabelComponent } from '../../../components/debateZone/loveLabel/loveLabelComponent';
+import { CommentsLabelComponent } from '../../../components/debateZone/comments/commentsLabelComponent';
 
 interface ActiveComponentProps {
     debateZone: CreatedDebateZone;
@@ -39,6 +41,9 @@ export const ActiveComponent = ({
     });
     const [isMicrophoneOn, setIsMicrophoneOn] = useState<boolean>(false);
     const [isVideoOn, setIsVideoOn] = useState<boolean>(false);
+    const [comments, setComments] = useState<OutputCommentList>(undefined);
+    const [isLove, setIsLove] = useState<boolean>(false);
+    const [isComments, setIsComments] = useState<boolean>(false);
 
     useEffect(() => {
         getUser().then(user => {
@@ -51,6 +56,10 @@ export const ActiveComponent = ({
             setCurrentRound(debateZone?.rounds?.[0]);
         });
     }, [debateZone]);
+
+    useEffect(() => {
+        setComments(commentsList);
+    }, [commentsList]);
 
     return (
         <>
@@ -140,6 +149,28 @@ export const ActiveComponent = ({
                 >
                     <VideoLabelComponent isVideoOn={isVideoOn} />
                 </Pressable>
+
+                <Pressable
+                    style={{
+                        marginTop: 15,
+                    }}
+                    onPress={() => {
+                        setIsLove(!isLove);
+                    }}
+                >
+                    <LoveLabelComponent isLove={isLove} />
+                </Pressable>
+
+                <Pressable
+                    style={{
+                        marginTop: 15,
+                    }}
+                    onPress={() => {
+                        setIsComments(!isComments);
+                    }}
+                >
+                    <CommentsLabelComponent isComments={isComments} />
+                </Pressable>
             </View>
 
             <View
@@ -172,7 +203,7 @@ export const ActiveComponent = ({
                     }}
                 >
                     <CommentListComponent
-                        outputCommentList={commentsList}
+                        outputCommentList={comments}
                         onDelete={onCommentDelete}
                         onReply={onCommentReply}
                     />

@@ -77,9 +77,9 @@ export type Comment = {
     _id: string;
     debateZoneId: string;
     userId: string;
-    userFirstName: string;
+    userFullName: string;
     toUserId: string;
-    toUserFirstName: string;
+    toUserFullName: string;
     text: string;
     createdAt: string;
     updatedAt: string;
