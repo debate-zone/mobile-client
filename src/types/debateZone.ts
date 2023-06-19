@@ -78,18 +78,23 @@ export type Comment = {
     debateZoneId: string;
     userId: string;
     userFullName: string;
-    toUserId: string;
-    toUserFullName: string;
+    toUserId?: string;
+    toUserFullName?: string;
     text: string;
-    createdAt: string;
-    updatedAt: string;
+    createdAt?: string;
+    updatedAt?: string;
 };
 
 export type OutputComment = Comment;
 
 export type NewComment = Omit<
     Comment,
-    '_id' | 'createdAt' | 'updatedAt' | 'userId'
+    | '_id'
+    | 'createdAt'
+    | 'updatedAt'
+    | 'userId'
+    | 'debateZoneId'
+    | 'userFullName'
 >;
 
 export type DeletedComment = Comment & {

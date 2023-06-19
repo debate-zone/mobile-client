@@ -10,6 +10,8 @@ import {
 import { request } from '../../apiClient/apiClient';
 import { socketIo } from '../../utils/socketIo';
 import { Socket } from 'socket.io-client';
+import {randomUUID} from "expo-crypto";
+import Toast from "react-native-root-toast";
 
 interface RootScreenProps {
     navigation: NativeStackNavigationProp<RootStackParamList, 'ActiveScreen'>;
@@ -62,15 +64,48 @@ export const ActiveScreen = ({ navigation, route }: RootScreenProps) => {
         });
     };
 
+    const onCommentNew = (text: string) => {
+        try {
+            socket.emit('onNewComment', {
+                text: text,
+            })
+            addCommentToList(
+                {
+                    _id: randomUUID(),
+                    text: text,
+                    userFullName: 'You',
+                    userId: randomUUID(),
+                    debateZoneId: route.params.debateZoneId,
+                }
+            )
+        } catch (e) {
+            Toast.show('Error while sending comment', {
+                duration: Toast.durations.LONG,
+                position: Toast.positions.BOTTOM,
+                shadow: true,
+                animation: true,
+            })
+        }
+    };
+
     const onCommentReply = (comment: OutputComment) => {
         console.log('onCommentReply not implemented yet', comment);
     };
 
     const onCommentDelete = (comment: OutputComment) => {
-        socket.emit('onDeleteComment', {
-            id: comment._id,
-        });
-        deleteCommentFromList(comment);
+        try {
+            socket.emit('onDeleteComment', {
+                id: comment._id,
+            });
+            deleteCommentFromList(comment);
+        } catch (e) {
+            Toast.show('Error while deleting comment', {
+                duration: Toast.durations.LONG,
+                position: Toast.positions.BOTTOM,
+                shadow: true,
+                animation: true,
+            })
+        }
     };
 
     useEffect(() => {
@@ -117,6 +152,7 @@ export const ActiveScreen = ({ navigation, route }: RootScreenProps) => {
             commentsList={commentsList}
             onCommentReply={onCommentReply}
             onCommentDelete={onCommentDelete}
+            onCommentSend={onCommentNew}
         />
     );
 };

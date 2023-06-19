@@ -21,7 +21,7 @@ export const JoinListScreen = ({ navigation }: RootScreenProps) => {
     };
 
     const onItemPress = (id: string) => {
-        const isLive = !outputDebateZoneList.debateZones.find(x => x._id === id)
+        const isLive = outputDebateZoneList.debateZones.find(x => x._id === id)
             ?.isLive;
 
         if (isLive) {

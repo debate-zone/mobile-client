@@ -15,6 +15,7 @@ export const ProfileScreen = ({ navigation }: RootScreenProps) => {
     const [currentUser, setCurrentUser] = useState<User>();
     const [joinedDebateZones, setJoinedDebateZones] =
         useState<OutputDebateZoneList>();
+    const [myDebateZones, setMyDebateZones] = useState<OutputDebateZoneList>();
 
     const updateName = async (fullName: string) => {
         const user = await request<User>('PUT', '/user/v1/users/update', {
@@ -37,6 +38,13 @@ export const ProfileScreen = ({ navigation }: RootScreenProps) => {
         );
     };
 
+    const getMyDebateZones = async () => {
+        return await request<OutputDebateZoneList>(
+            'GET',
+            '/debate-zone/v1/debate-zones/profile/my-list',
+        );
+    }
+
     const onJoinListItemPress = (id: string) => {
         navigation.navigate('JoinDetailsScreen', {
             id,
@@ -50,6 +58,9 @@ export const ProfileScreen = ({ navigation }: RootScreenProps) => {
         getJoinedDebateZones().then(debateZoneList => {
             setJoinedDebateZones(debateZoneList);
         });
+        getMyDebateZones().then(debateZoneList => {
+            setMyDebateZones(debateZoneList);
+        });
     }, []);
 
     return (
@@ -60,6 +71,7 @@ export const ProfileScreen = ({ navigation }: RootScreenProps) => {
                 onChangeName={updateName}
                 onLogout={logout}
                 joinedDebateZones={joinedDebateZones}
+                myDebateZones={myDebateZones}
                 onJoinListItemPress={onJoinListItemPress}
             />
         </>

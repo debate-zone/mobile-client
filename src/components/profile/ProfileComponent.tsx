@@ -19,10 +19,11 @@ interface ProfileComponentProps {
     onChangeName: (fullName: string) => void;
     onLogout: () => void;
     joinedDebateZones: OutputDebateZoneList;
+    myDebateZones: OutputDebateZoneList;
     onJoinListItemPress: (id: string) => void;
 }
 
-type SegmentButtonValue = 'chart' | 'joinedList';
+type SegmentButtonValue = 'chart' | 'joinedList' | 'myDebates';
 
 type SegmentButton = {
     value: SegmentButtonValue;
@@ -38,6 +39,10 @@ const segmentButtons: SegmentButton[] = [
         value: 'joinedList',
         label: 'Joined',
     },
+    {
+        value: 'myDebates',
+        label: 'My Debates',
+    }
 ];
 
 export const ProfileComponent: React.FC<ProfileComponentProps> = ({
@@ -46,6 +51,7 @@ export const ProfileComponent: React.FC<ProfileComponentProps> = ({
     onChangeName,
     onLogout,
     joinedDebateZones,
+    myDebateZones,
     onJoinListItemPress,
 }) => {
     const [name, setName] = useState<string | undefined>();
@@ -65,6 +71,32 @@ export const ProfileComponent: React.FC<ProfileComponentProps> = ({
             setImage(user.image);
         }
     }, [user]);
+
+    const getTabBody = (segmentButtonValue: SegmentButtonValue) => {
+        switch (segmentButtonValue) {
+            case 'chart':
+                return (
+                    <PoliticalPreferenceChartComponent
+                        politicalPreferences={[politicalPreference]}
+                        onPoliticalPreferenceSelected={
+                            onPoliticalPreferenceSelected
+                        }
+                    />
+                );
+            case 'joinedList':
+                return <JoinList
+                    outputDebateZoneList={joinedDebateZones}
+                    onPress={onJoinListItemPress}
+                />
+            case 'myDebates':
+                return (
+                    <JoinList
+                        outputDebateZoneList={myDebateZones}
+                        onPress={onJoinListItemPress}
+                    />
+                );
+        }
+    };
 
     return (
         <View
@@ -109,19 +141,7 @@ export const ProfileComponent: React.FC<ProfileComponentProps> = ({
                         marginTop: -10,
                     }}
                 >
-                    {currentSegmentButton[0]?.value === 'chart' ? (
-                        <PoliticalPreferenceChartComponent
-                            politicalPreferences={[politicalPreference]}
-                            onPoliticalPreferenceSelected={
-                                onPoliticalPreferenceSelected
-                            }
-                        />
-                    ) : (
-                        <JoinList
-                            outputDebateZoneList={joinedDebateZones}
-                            onPress={onJoinListItemPress}
-                        />
-                    )}
+                    {getTabBody(currentSegmentButton[0]?.value)}
                 </View>
             </SafeAreaView>
         </View>

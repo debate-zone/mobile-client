@@ -17,12 +17,14 @@ import { MicrophoneLabelComponent } from '../../../components/debateZone/microph
 import { VideoLabelComponent } from '../../../components/debateZone/camera/videoLabelComponent';
 import { LoveLabelComponent } from '../../../components/debateZone/loveLabel/loveLabelComponent';
 import { CommentsLabelComponent } from '../../../components/debateZone/comments/commentsLabelComponent';
+import { CommentSendComponent } from '../../../components/debateZone/comments/commentSendComponent';
 
 interface ActiveComponentProps {
     debateZone: CreatedDebateZone;
     commentsList: OutputCommentList;
     onCommentDelete: (comment: OutputComment) => void;
     onCommentReply: (comment: OutputComment) => void;
+    onCommentSend: (text: string) => void;
 }
 
 export const ActiveComponent = ({
@@ -30,6 +32,7 @@ export const ActiveComponent = ({
     commentsList,
     onCommentReply,
     onCommentDelete,
+    onCommentSend,
 }: ActiveComponentProps) => {
     const [currentUserId, setCurrentUserId] = useState<string>('');
     const [isUserActive, setIsUserActive] = useState<boolean>(true);
@@ -199,14 +202,22 @@ export const ActiveComponent = ({
                         alignItems: 'flex-end',
                         width: (Dimensions.get('window').width / 3) * 1.9,
                         height: Dimensions.get('window').height / 5,
+                        justifyContent: 'space-between',
                         marginRight: 10,
                     }}
                 >
-                    <CommentListComponent
-                        outputCommentList={comments}
-                        onDelete={onCommentDelete}
-                        onReply={onCommentReply}
-                    />
+                    <View
+                        style={{
+                            flexDirection: 'column',
+                        }}
+                    >
+                        <CommentListComponent
+                            outputCommentList={comments}
+                            onDelete={onCommentDelete}
+                            onReply={onCommentReply}
+                        />
+                        <CommentSendComponent onSend={onCommentSend} />
+                    </View>
                 </View>
             </View>
         </>
