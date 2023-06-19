@@ -75,7 +75,12 @@ export const NewDebateZoneComponent: React.FC<NewDebateZoneComponentProps> = ({
             date: date?.toISOString(),
             isPrivate: isPrivate,
             isAIReferee: isAIReferee,
-            participants: participants,
+            participants: participants.map(participant => {
+                return {
+                    email: participant.email.trim().toLowerCase(),
+                    role: participant.role,
+                };
+            }),
             isPublicChoice: isPublicChoice,
             isSave: isSave,
         });
