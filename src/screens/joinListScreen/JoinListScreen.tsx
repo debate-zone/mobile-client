@@ -1,4 +1,4 @@
-import { StyleSheet, View } from 'react-native';
+import { Dimensions, StyleSheet, View } from 'react-native';
 import { NativeStackNavigationProp } from 'react-native-screens/native-stack';
 import { RootStackParamList } from '../../types';
 import JoinList from '../../../src/components/UI/joinList/joinList';
@@ -21,8 +21,9 @@ export const JoinListScreen = ({ navigation }: RootScreenProps) => {
     };
 
     const onItemPress = (id: string) => {
-        const isLive = outputDebateZoneList.debateZones.find(x => x._id === id)
-            ?.isLive;
+        const isLive = outputDebateZoneList.debateZones.find(
+            x => x._id === id,
+        )?.isLive;
 
         if (isLive) {
             navigation.navigate('ActiveScreen', {
@@ -55,6 +56,7 @@ const styles = StyleSheet.create({
     container: {
         backgroundColor: '#A9BBE2',
         width: '100%',
-        height: '100%',
+        paddingTop: 20,
+        height: Dimensions.get('window').height * 0.9,
     },
 });

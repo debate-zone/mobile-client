@@ -4,7 +4,14 @@ import {
     User,
 } from '../../types/user';
 import { PoliticalPreferenceChartComponent } from '../../components/politicalPreference/PoliticalPreferenceChartComponent';
-import { SafeAreaView, View } from 'react-native';
+import {
+    Button,
+    Dimensions,
+    SafeAreaView,
+    StyleSheet,
+    Text,
+    View,
+} from 'react-native';
 import { ProfileDetailsComponent } from '../../components/profile/details/ProfileDetailsComponent';
 import { useEffect, useState } from 'react';
 import { SegmentedButtons } from 'react-native-paper';
@@ -21,6 +28,8 @@ interface ProfileComponentProps {
     joinedDebateZones: OutputDebateZoneList;
     myDebateZones: OutputDebateZoneList;
     onJoinListItemPress: (id: string) => void;
+    onCreateDebateZonePress: () => void;
+    onJoinDebateZonePress: () => void;
 }
 
 type SegmentButtonValue = 'chart' | 'joinedList' | 'myDebates';
@@ -42,7 +51,7 @@ const segmentButtons: SegmentButton[] = [
     {
         value: 'myDebates',
         label: 'My Debates',
-    }
+    },
 ];
 
 export const ProfileComponent: React.FC<ProfileComponentProps> = ({
@@ -53,6 +62,8 @@ export const ProfileComponent: React.FC<ProfileComponentProps> = ({
     joinedDebateZones,
     myDebateZones,
     onJoinListItemPress,
+    onCreateDebateZonePress,
+    onJoinDebateZonePress,
 }) => {
     const [name, setName] = useState<string | undefined>();
     const [email, setEmail] = useState<string>();
@@ -84,16 +95,42 @@ export const ProfileComponent: React.FC<ProfileComponentProps> = ({
                     />
                 );
             case 'joinedList':
-                return <JoinList
-                    outputDebateZoneList={joinedDebateZones}
-                    onPress={onJoinListItemPress}
-                />
+                return (
+                    (joinedDebateZones.debateZones.length > 0 && (
+                        <JoinList
+                            outputDebateZoneList={joinedDebateZones}
+                            onPress={onJoinListItemPress}
+                        />
+                    )) || (
+                        <>
+                            <Text style={styles.emptyListText}>
+                                You have not joined any debates yet.
+                            </Text>
+                            <Button
+                                title="Join Debate"
+                                onPress={onJoinDebateZonePress}
+                            />
+                        </>
+                    )
+                );
             case 'myDebates':
                 return (
-                    <JoinList
-                        outputDebateZoneList={myDebateZones}
-                        onPress={onJoinListItemPress}
-                    />
+                    (myDebateZones.debateZones.length > 0 && (
+                        <JoinList
+                            outputDebateZoneList={myDebateZones}
+                            onPress={onJoinListItemPress}
+                        />
+                    )) || (
+                        <>
+                            <Text style={styles.emptyListText}>
+                                You have not created any debates yet.
+                            </Text>
+                            <Button
+                                title="Create Debate"
+                                onPress={onCreateDebateZonePress}
+                            />
+                        </>
+                    )
                 );
         }
     };
@@ -118,7 +155,7 @@ export const ProfileComponent: React.FC<ProfileComponentProps> = ({
                 style={{
                     marginTop: 20,
                     width: '100%',
-                    height: '100%',
+                    height: Dimensions.get('window').height / 1.68,
                 }}
             >
                 <SegmentedButtons
@@ -139,6 +176,7 @@ export const ProfileComponent: React.FC<ProfileComponentProps> = ({
                 <View
                     style={{
                         marginTop: -10,
+                        padding: 10,
                     }}
                 >
                     {getTabBody(currentSegmentButton[0]?.value)}
@@ -147,3 +185,11 @@ export const ProfileComponent: React.FC<ProfileComponentProps> = ({
         </View>
     );
 };
+
+const styles = StyleSheet.create({
+    emptyListText: {
+        textAlign: 'center',
+        marginTop: 20,
+        fontSize: 20,
+    },
+});

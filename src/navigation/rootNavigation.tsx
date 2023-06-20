@@ -14,6 +14,7 @@ import { JoinListScreen } from '../screens/joinListScreen/JoinListScreen';
 import { JoinDetailsScreen } from '../screens/joinDetailsScreen/JoinDetailsScreen';
 import { getToken } from '../utils/loginUtils';
 import { ActiveScreen } from '../screens/activeScreen/activeScreen';
+import { FeedDetailsScreen } from '../screens/homeScreen/feed/feedDetailsScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -70,6 +71,20 @@ export default function RootNavigation() {
                     component={PoliticalPreferenceScreen}
                 />
                 <Stack.Screen name={HomeScreen.name} component={HomeScreen} />
+                <Stack.Screen
+                    options={{
+                        headerShown: true,
+                        headerTintColor: '#fff',
+                        headerTransparent: true,
+                        gestureEnabled: true,
+                        headerTitle: '',
+                        animation: 'fade',
+                        animationDuration: 500,
+                        customAnimationOnGesture: true,
+                    }}
+                    name={'FeedDetailsScreen'}
+                    component={FeedDetailsScreen}
+                />
                 <Stack.Screen
                     name={'NewDebateZoneScreen'}
                     component={NewDebateZoneScreen}

@@ -3,6 +3,11 @@ import { getToken, Token } from '../utils/loginUtils';
 import { API_URL } from '@env';
 import { createError } from '../utils/error';
 import { CustomError, Method, SuccessBody } from '../types/requestResponse';
+import {
+    NavigationContext,
+    useNavigationContainerRef,
+} from '@react-navigation/native';
+import React from 'react';
 
 async function formatError(response: Response) {
     const errorUnclearBody = await response.text();
@@ -47,6 +52,11 @@ export async function request<T>(method: Method, path: string, body?: any) {
         if (response.ok) {
             return ((await response.json()) as SuccessBody<T>).data;
         } else {
+            if (response.status === 401) {
+                const navigation = React.useContext(NavigationContext);
+                navigation?.navigate('LoginScreen');
+                return;
+            }
             await formatError(response);
         }
     } catch (error) {

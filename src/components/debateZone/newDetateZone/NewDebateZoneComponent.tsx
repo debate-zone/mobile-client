@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Text, TextInput, ScrollView } from 'react-native';
 import CheckBox from 'expo-checkbox';
 import {
@@ -13,6 +13,9 @@ import { DatePickerInput, TimePicker } from 'react-native-paper-dates';
 import { PossibleClockTypes } from 'react-native-paper-dates/lib/typescript/Time/timeUtils';
 import Toast from 'react-native-root-toast';
 import { CustomError } from '../../../types/requestResponse';
+import moment from 'moment';
+import { get, save } from '../../../store/secure/secureStoreService';
+import { KeyEnum } from '../../../store/secure/keyEnum';
 
 interface NewDebateZoneComponentProps {
     onSubmit: (newDebateZone: NewDebateZone) => Promise<string>;
@@ -46,7 +49,7 @@ export const NewDebateZoneComponent: React.FC<NewDebateZoneComponentProps> = ({
         error: '',
     });
     const [roundTime, setRoundTime] = useState<number>();
-    const [date, setDate] = useState<Date>(new Date());
+    const [date, setDate] = useState<Date>(moment().toDate());
     const [hours, setHours] = useState<number>(new Date().getHours());
     const [minutes, setMinutes] = useState<number>(new Date().getMinutes());
     const [isPrivate, setIsPrivate] = useState<boolean>();
@@ -64,15 +67,19 @@ export const NewDebateZoneComponent: React.FC<NewDebateZoneComponentProps> = ({
     const [isSave, setIsSave] = useState<boolean>();
 
     const handleSubmit = () => {
+        return onSubmit(formatNewDebateZone());
+    };
+
+    const formatNewDebateZone = () => {
         date.setHours(hours || 0);
         date.setMinutes(minutes || 0);
 
-        return onSubmit({
+        return {
             title: title,
             shortDescription: shortDescription,
             type: type.selectedList[0]?._id,
             roundTime: roundTime,
-            date: date?.toISOString(),
+            date: date.toString(),
             isPrivate: isPrivate,
             isAIReferee: isAIReferee,
             participants: participants.map(participant => {
@@ -83,6 +90,38 @@ export const NewDebateZoneComponent: React.FC<NewDebateZoneComponentProps> = ({
             }),
             isPublicChoice: isPublicChoice,
             isSave: isSave,
+        };
+    };
+
+    const handleSaveUnSubmittedData = async () => {
+        await save(
+            KeyEnum.newDebateZone,
+            JSON.stringify(formatNewDebateZone()),
+        );
+    };
+
+    const handleLoadUnSubmittedData = async () => {
+        get(KeyEnum.newDebateZone).then((data: string) => {
+            if (data) {
+                const newDebateZone = JSON.parse(data) as NewDebateZone;
+                if (newDebateZone) {
+                    setTitle(newDebateZone.title);
+                    setShortDescription(newDebateZone.shortDescription);
+                    setType({
+                        ...type,
+                        selectedList: typeList.filter(
+                            type => type._id === newDebateZone.type,
+                        ),
+                    });
+                    setRoundTime(newDebateZone.roundTime);
+                    setDate(new Date(newDebateZone.date));
+                    setIsPrivate(newDebateZone.isPrivate);
+                    setIsAIReferee(newDebateZone.isAIReferee);
+                    setParticipants(newDebateZone.participants);
+                    setIsPublicChoice(newDebateZone.isPublicChoice);
+                    setIsSave(newDebateZone.isSave);
+                }
+            }
         });
     };
 
@@ -127,6 +166,35 @@ export const NewDebateZoneComponent: React.FC<NewDebateZoneComponentProps> = ({
             },
         ]);
     };
+
+    useEffect(() => {
+        handleLoadUnSubmittedData()
+            .then(() => {
+                console.log(
+                    'NewDebateZoneComponent: handleLoadUnSubmittedData',
+                );
+            })
+            .catch((error: CustomError) => {
+                console.log(
+                    'NewDebateZoneComponent: handleLoadUnSubmittedData: error: ',
+                    error,
+                );
+            });
+        return () => {
+            handleSaveUnSubmittedData()
+                .then(() => {
+                    console.log(
+                        'NewDebateZoneComponent: handleSaveUnSubmittedData',
+                    );
+                })
+                .catch((error: CustomError) => {
+                    console.log(
+                        'NewDebateZoneComponent: handleSaveUnSubmittedData: error: ',
+                        error,
+                    );
+                });
+        };
+    }, []);
 
     return (
         <ScrollView
