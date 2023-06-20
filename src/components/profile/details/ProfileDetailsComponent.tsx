@@ -18,6 +18,10 @@ export const ProfileDetailsComponent = (
     const [image] = useState<AvatarImageSource | undefined>(props.imgSource);
     const [isEditingName, setIsEditingName] = useState(false);
 
+    useEffect(() => {
+        setName(props.name);
+    }, [props.name]);
+
     return (
         <View
             style={{
@@ -66,7 +70,7 @@ export const ProfileDetailsComponent = (
                             setIsEditingName(true);
                         }}
                     >
-                        {name || props.name}
+                        {name}
                     </Text>
                 )}
                 <Text>{props.email}</Text>

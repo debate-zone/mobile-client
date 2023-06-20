@@ -3,7 +3,10 @@ import { CreatedDebateZone } from '../../../types/debateZone';
 import { Text } from 'react-native-paper';
 import React, { useEffect } from 'react';
 import Toast from 'react-native-root-toast';
-
+//@ts-ignore
+import Avatar from '../../../../assets/debateZone/avatar.svg';
+//@ts-ignore
+import Logo from '../../../../assets/logo.svg';
 interface JoinDetailsProps {
     debateZone?: CreatedDebateZone;
     onJoin: () => Promise<CreatedDebateZone>;
@@ -82,12 +85,7 @@ export const JoinDetailsComponent = (props: JoinDetailsProps) => {
                     shadowOpacity: 0.2,
                 }}
             >
-                <Image
-                    source={require('../../../../assets/avatar.png')}
-                    style={{
-                        alignSelf: 'center',
-                    }}
-                />
+                <Avatar with={100} height={100} color={'#ffff'} />
                 <View
                     style={{
                         marginTop: 30,
@@ -150,11 +148,7 @@ export const JoinDetailsComponent = (props: JoinDetailsProps) => {
                         padding: 20,
                     }}
                 >
-                    <Image
-                        source={require('../../../../assets/logo-white.png')}
-                        resizeMode={'contain'}
-                        style={{ height: 39, width: 36 }}
-                    />
+                    <Logo height={39} width={36} />
 
                     <Text style={styles.btnTextJoin}>
                         {getJoinButtonText()}

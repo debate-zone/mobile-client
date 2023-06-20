@@ -43,7 +43,7 @@ export const ProfileScreen = ({ navigation }: RootScreenProps) => {
             'GET',
             '/debate-zone/v1/debate-zones/profile/my-list',
         );
-    }
+    };
 
     const onJoinListItemPress = (id: string) => {
         navigation.navigate('JoinDetailsScreen', {
@@ -73,6 +73,12 @@ export const ProfileScreen = ({ navigation }: RootScreenProps) => {
                 joinedDebateZones={joinedDebateZones}
                 myDebateZones={myDebateZones}
                 onJoinListItemPress={onJoinListItemPress}
+                onCreateDebateZonePress={() => {
+                    navigation.navigate('NewDebateZoneScreen');
+                }}
+                onJoinDebateZonePress={() => {
+                    navigation.navigate('JoinListScreen');
+                }}
             />
         </>
     );

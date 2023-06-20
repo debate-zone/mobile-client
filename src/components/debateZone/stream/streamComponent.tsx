@@ -1,4 +1,6 @@
 import { Image, View } from 'react-native';
+//@ts-ignore
+import Avatar from '../../../../assets/debateZone/avatar.svg';
 
 interface StreamComponentProps {}
 
@@ -10,16 +12,9 @@ export const StreamComponent = (props: StreamComponentProps) => {
                 height: '100%',
                 alignItems: 'center',
                 justifyContent: 'center',
-                backgroundColor: '#A9BBE2',
             }}
         >
-            <Image
-                style={{
-                    width: 100,
-                    height: 120,
-                }}
-                source={require('../../../../assets/avatar.png')}
-            />
+            <Avatar with={100} height={100} color={'#ffff'} />
         </View>
     );
 };

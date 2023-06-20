@@ -28,20 +28,9 @@ const JoinList: React.FC<JoinListProps> = ({
                     )}
                     keyExtractor={item => item._id}
                     style={styles.container}
-                    showsVerticalScrollIndicator={false}
-                    bounces={false}
                 />
-            )) || (
-            <Text
-                style={{
-                    textAlign: 'center',
-                    fontSize: 20,
-                    marginTop: 30,
-                }}
-            >
-                There are no debate zones in near future
-            </Text>
-        )
+            )) ||
+        null
     );
 };
 

@@ -59,11 +59,8 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     shortDescription: {
-        borderRadius: 12,
-        borderWidth: 1,
         padding: 10,
         fontSize: 15,
-        color: '#FFFFFF',
     },
     detailsShowHide: {
         fontSize: 20,
