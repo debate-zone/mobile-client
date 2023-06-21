@@ -1,6 +1,6 @@
 import React from 'react';
 import { FlatList, StyleSheet, Text } from 'react-native';
-import JoinItem from '../../../../src/components/UI/joinItem/joinItem';
+import JoinItem from '../joinItem/joinItem';
 import { OutputDebateZoneList } from '../../../types/debateZone';
 
 type JoinListProps = {

@@ -5,7 +5,7 @@ import { LoginFacebookComponent } from './facebook/LoginFacebookComponent';
 import { LoginCredentialsComponent } from './credentials/LoginCredentialsComponent';
 import {View, Image, StyleSheet} from "react-native";
 import LogoSvgComponent from "../../../src/components/svgIcons/logo1";
-import CustomInput from "../../../src/components/UI/LoginInput/logininput";
+import CustomInput from "../debateZone/LoginInput/logininput";
 
 export type LoginComponentProps = {
     toNext: () => void;

@@ -104,3 +104,7 @@ export type DeletedComment = Comment & {
 export type OutputCommentList = {
     comments: OutputComment[];
 };
+
+export type IsReadNotification = {
+    isRead: boolean
+}

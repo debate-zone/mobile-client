@@ -2,17 +2,23 @@ import { Avatar, TextInput, Text, Button } from 'react-native-paper';
 import { View } from 'react-native';
 import { useEffect, useState } from 'react';
 import { AvatarImageSource } from 'react-native-paper/lib/typescript/src/components/Avatar/AvatarImage';
-
+import React from 'react';
+import TrueNotificationSvg from "../../../../src/components/svgIcons/truenotification";
+import IsNotificationSvg from "../../../../src/components/svgIcons/truenotification";
+import NotificationSvg from "../../../../src/components/svgIcons/falsenotification";
+import NoNotificationSvg from "../../../../src/components/svgIcons/falsenotification";
 interface ProfileDetailsComponentProps {
     imgSource?: AvatarImageSource;
     name?: string;
     email: string;
     onChangeName: (fullName: string) => void;
     onLogout: () => void;
+    notificationIsRead: boolean
 }
 
 export const ProfileDetailsComponent = (
     props: ProfileDetailsComponentProps,
+
 ) => {
     const [name, setName] = useState(props.name);
     const [image] = useState<AvatarImageSource | undefined>(props.imgSource);
@@ -73,6 +79,7 @@ export const ProfileDetailsComponent = (
                         {name}
                     </Text>
                 )}
+
                 <Text>{props.email}</Text>
                 <Button
                     style={{
@@ -85,6 +92,8 @@ export const ProfileDetailsComponent = (
                     Logout
                 </Button>
             </View>
+
+            {props.notificationIsRead ? <NoNotificationSvg/>  : <IsNotificationSvg/>}
         </View>
     );
 };

@@ -28,7 +28,6 @@ const BottomBar: React.FC = () => {
             <View style={styles.NavBar}>
                 <TouchableOpacity onPress={navigateHome}>
                     <HomeSvg />
-                    <Text style={styles.Text}>Home</Text>
                 </TouchableOpacity>
 
                 <TouchableOpacity onPress={navigateJoinList}>
@@ -37,17 +36,14 @@ const BottomBar: React.FC = () => {
                         resizeMode={'contain'}
                         style={{ height: 39, width: 36 }}
                     />
-                    <Text style={styles.Text}>Join</Text>
                 </TouchableOpacity>
 
                 <TouchableOpacity onPress={navigateNewDebateZone}>
                     <CreateSvg />
-                    <Text style={styles.Text}>Create</Text>
                 </TouchableOpacity>
 
                 <TouchableOpacity onPress={navigateProfile}>
                     <ProfileSvg />
-                    <Text style={styles.Text}>Profile</Text>
                 </TouchableOpacity>
             </View>
         </View>
@@ -58,15 +54,15 @@ const styles = StyleSheet.create({
     container: {
         position: 'absolute',
         alignItems: 'center',
+        height: 80,
         bottom: 0,
-        backgroundColor: 'black',
+        backgroundColor: 'rgba(40,38,38,0.8)',
     },
     NavBar: {
         marginTop: 9,
         flexDirection: 'row',
-        backgroundColor: 'black',
         width: '100%',
-        height: 77,
+        height: '100%',
         justifyContent: 'space-evenly',
     },
     IconBehave: {
@@ -82,3 +78,5 @@ const styles = StyleSheet.create({
     },
 });
 export default BottomBar;
+/*
+df*/
