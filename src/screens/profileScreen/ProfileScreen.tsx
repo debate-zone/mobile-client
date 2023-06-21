@@ -3,9 +3,10 @@ import { useEffect, useState } from 'react';
 import { getUser, removeToken, saveUser } from '../../utils/loginUtils';
 import { User } from '../../types/user';
 import { request } from '../../apiClient/apiClient';
-import { OutputDebateZoneList } from '../../types/debateZone';
+import {IsReadNotification, OutputDebateZoneList} from '../../types/debateZone';
 import { NativeStackNavigationProp } from 'react-native-screens/native-stack';
 import { RootStackParamList } from '../../types';
+import React from 'react';
 
 interface RootScreenProps {
     navigation: NativeStackNavigationProp<RootStackParamList, 'ProfileScreen'>;
@@ -17,6 +18,7 @@ export const ProfileScreen = ({ navigation }: RootScreenProps) => {
         useState<OutputDebateZoneList>();
     const [myDebateZones, setMyDebateZones] = useState<OutputDebateZoneList>();
 
+    const [notificationIsRead, setNotificationIsRead] = useState<boolean>(false)
     const updateName = async (fullName: string) => {
         const user = await request<User>('PUT', '/user/v1/users/update', {
             fullName: fullName,
@@ -45,6 +47,13 @@ export const ProfileScreen = ({ navigation }: RootScreenProps) => {
         );
     };
 
+    const getIsReadNotification = async () => {
+        return await request<IsReadNotification>(
+            'GET',
+            '/notification/v1/notifications/isRead'
+        )
+    }
+
     const onJoinListItemPress = (id: string) => {
         navigation.navigate('JoinDetailsScreen', {
             id,
@@ -61,11 +70,15 @@ export const ProfileScreen = ({ navigation }: RootScreenProps) => {
         getMyDebateZones().then(debateZoneList => {
             setMyDebateZones(debateZoneList);
         });
+        getIsReadNotification().then(value => {
+            setNotificationIsRead(value.isRead)
+        })
     }, []);
 
     return (
         <>
             <ProfileComponent
+                notificationIsRead={notificationIsRead}
                 user={currentUser}
                 onPoliticalPreferenceSelected={() => {}}
                 onChangeName={updateName}

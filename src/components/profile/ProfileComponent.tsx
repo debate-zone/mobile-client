@@ -13,9 +13,9 @@ import {
     View,
 } from 'react-native';
 import { ProfileDetailsComponent } from '../../components/profile/details/ProfileDetailsComponent';
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { SegmentedButtons } from 'react-native-paper';
-import JoinList from '../../components/UI/joinList/joinList';
+import JoinList from '../debateZone/joinList/joinList';
 import { OutputDebateZoneList } from '../../types/debateZone';
 
 interface ProfileComponentProps {
@@ -30,6 +30,7 @@ interface ProfileComponentProps {
     onJoinListItemPress: (id: string) => void;
     onCreateDebateZonePress: () => void;
     onJoinDebateZonePress: () => void;
+    notificationIsRead: boolean
 }
 
 type SegmentButtonValue = 'chart' | 'joinedList' | 'myDebates';
@@ -64,6 +65,7 @@ export const ProfileComponent: React.FC<ProfileComponentProps> = ({
     onJoinListItemPress,
     onCreateDebateZonePress,
     onJoinDebateZonePress,
+    notificationIsRead
 }) => {
     const [name, setName] = useState<string | undefined>();
     const [email, setEmail] = useState<string>();
@@ -144,6 +146,7 @@ export const ProfileComponent: React.FC<ProfileComponentProps> = ({
             }}
         >
             <ProfileDetailsComponent
+                notificationIsRead={notificationIsRead}
                 imgSource={{ uri: image }}
                 name={name}
                 email={email}

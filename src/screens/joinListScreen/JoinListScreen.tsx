@@ -1,7 +1,7 @@
 import { Dimensions, StyleSheet, View } from 'react-native';
 import { NativeStackNavigationProp } from 'react-native-screens/native-stack';
 import { RootStackParamList } from '../../types';
-import JoinList from '../../../src/components/UI/joinList/joinList';
+import JoinList from '../../components/debateZone/joinList/joinList';
 import { request } from '../../apiClient/apiClient';
 import { OutputDebateZoneList } from '../../types/debateZone';
 import { useEffect, useState } from 'react';
