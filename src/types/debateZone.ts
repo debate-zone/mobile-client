@@ -3,7 +3,15 @@ import {Notification} from "expo-notifications";
 export type CreatedParticipant = {
     userId: string;
     role: string;
+    status: ParticipantStatus;
 };
+
+export enum ParticipantStatus {
+    PENDING = 'PENDING',
+    ACCEPTED = 'ACCEPTED',
+    REJECTED = 'REJECTED',
+    LEFT = 'LEFT',
+}
 
 export type Round = {
     time: number;
@@ -114,8 +122,8 @@ export type OutputCommentList = {
 };
 
 export type IsReadNotification = {
-    isRead: boolean
-}
+    isRead: boolean;
+};
 
 export type OutputNotification = {
     _id: string

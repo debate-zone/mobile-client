@@ -8,11 +8,10 @@ import {
     useNavigationContainerRef,
 } from '@react-navigation/native';
 import React from 'react';
-import {err} from "react-native-svg/lib/typescript/xml";
 
 async function formatError(response: Response) {
     const errorUnclearBody = await response.text();
-    console.log(errorUnclearBody)
+    console.log(errorUnclearBody);
     const errorBody = JSON.parse(errorUnclearBody);
     const objectErrorBodyMessages = JSON.parse(errorBody.error.message);
 

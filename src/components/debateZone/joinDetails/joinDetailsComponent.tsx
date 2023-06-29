@@ -1,5 +1,9 @@
-import { Image, StyleSheet, TouchableOpacity, View } from 'react-native';
-import { CreatedDebateZone } from '../../../types/debateZone';
+import { StyleSheet, TouchableOpacity, View } from 'react-native';
+import {
+    CreatedDebateZone,
+    CreatedParticipant,
+    ParticipantStatus,
+} from '../../../types/debateZone';
 import { Text } from 'react-native-paper';
 import React, { useEffect } from 'react';
 import Toast from 'react-native-root-toast';
@@ -7,9 +11,11 @@ import Toast from 'react-native-root-toast';
 import Avatar from '../../../../assets/debateZone/avatar.svg';
 //@ts-ignore
 import Logo from '../../../../assets/logo.svg';
+import { getUser } from '../../../utils/loginUtils';
+
 interface JoinDetailsProps {
     debateZone?: CreatedDebateZone;
-    onJoin: () => Promise<CreatedDebateZone>;
+    onJoin: (status: ParticipantStatus) => Promise<CreatedDebateZone>;
 }
 
 export const JoinDetailsComponent = (props: JoinDetailsProps) => {
@@ -17,6 +23,9 @@ export const JoinDetailsComponent = (props: JoinDetailsProps) => {
         CreatedDebateZone | undefined
     >(props.debateZone);
     const [isJoinDisabled, setIsJoinDisabled] = React.useState<boolean>();
+    const [joinButtonText, setJoinButtonText] = React.useState<string>('');
+    const [participantStatus, setParticipantStatus] =
+        React.useState<ParticipantStatus>();
 
     useEffect(() => {
         setDebateZone(props.debateZone);
@@ -38,15 +47,22 @@ export const JoinDetailsComponent = (props: JoinDetailsProps) => {
         }
     };
 
-    const getJoinButtonText = () => {
-        if (debateZone?.isAlreadyJoined) {
-            return 'Joined';
-        } else if (debateZone?.isTimeExpired) {
-            return 'Time expired';
-        } else if (debateZone?.isAlreadyFinished) {
-            return 'Finished';
-        } else {
-            return `Join for ${calculateTimeToStart(debateZone?.date)}`;
+    const getParticipantStatus = async (): Promise<ParticipantStatus> => {
+        const user = await getUser();
+        const participant = debateZone?.participants?.find(
+            participant => participant.userId === user?._id,
+        );
+        return participant?.status;
+    };
+
+    const getJoinButtonText = async (): Promise<'Left' | 'Join'> => {
+        const participantStatus = await getParticipantStatus();
+
+        switch (participantStatus) {
+            case ParticipantStatus.ACCEPTED:
+                return 'Left';
+            default:
+                return 'Join';
         }
     };
 
@@ -59,6 +75,15 @@ export const JoinDetailsComponent = (props: JoinDetailsProps) => {
             );
         }
     }, [debateZone, isJoinDisabled]);
+
+    useEffect(() => {
+        getJoinButtonText().then(joinButtonText => {
+            setJoinButtonText(joinButtonText);
+        });
+        getParticipantStatus().then(participantStatus => {
+            setParticipantStatus(participantStatus);
+        });
+    }, [debateZone?.participants]);
 
     return (
         <View
@@ -122,19 +147,24 @@ export const JoinDetailsComponent = (props: JoinDetailsProps) => {
             </View>
 
             <TouchableOpacity
-                disabled={isJoinDisabled}
                 onPress={() => {
-                    props.onJoin().then(debateZone => {
-                        setDebateZone(debateZone);
-                        Toast.show("You've joined the debate zone!", {
-                            duration: Toast.durations.LONG,
-                            position: Toast.positions.CENTER,
-                            shadow: true,
-                            animation: true,
-                            hideOnPress: true,
-                            delay: 0,
+                    props
+                        .onJoin(
+                            participantStatus === ParticipantStatus.ACCEPTED
+                                ? ParticipantStatus.LEFT
+                                : ParticipantStatus.ACCEPTED,
+                        )
+                        .then(debateZone => {
+                            setDebateZone(debateZone);
+                            Toast.show("You've joined the debate zone!", {
+                                duration: Toast.durations.LONG,
+                                position: Toast.positions.CENTER,
+                                shadow: true,
+                                animation: true,
+                                hideOnPress: true,
+                                delay: 0,
+                            });
                         });
-                    });
                 }}
             >
                 <View
@@ -142,7 +172,7 @@ export const JoinDetailsComponent = (props: JoinDetailsProps) => {
                         height: 66,
                         alignSelf: 'center',
                         alignItems: 'center',
-                        backgroundColor: isJoinDisabled ? '#676767' : '#1f3c62',
+                        backgroundColor: '#1f3c62',
                         flexDirection: 'row',
                         borderRadius: 21,
                         padding: 20,
@@ -151,7 +181,7 @@ export const JoinDetailsComponent = (props: JoinDetailsProps) => {
                     <Logo height={39} width={36} />
 
                     <Text style={styles.btnTextJoin}>
-                        {getJoinButtonText()}
+                        {joinButtonText || 'Join'}
                     </Text>
                 </View>
             </TouchableOpacity>
