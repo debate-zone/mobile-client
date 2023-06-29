@@ -8,6 +8,7 @@ export type RootStackParamList = {
         debateZoneId: string;
     };
     NewDebateZoneScreen: undefined;
+    NotificationScreen: undefined;
     JoinListScreen: undefined;
     ProfileScreen: undefined;
     JoinDetailsScreen: {

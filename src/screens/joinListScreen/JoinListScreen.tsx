@@ -57,6 +57,6 @@ const styles = StyleSheet.create({
         backgroundColor: '#A9BBE2',
         width: '100%',
         paddingTop: 20,
-        height: Dimensions.get('window').height * 0.9,
+        height: "100%",
     },
 });
