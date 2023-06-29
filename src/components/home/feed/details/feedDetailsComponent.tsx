@@ -1,7 +1,7 @@
 import { Text, View } from 'react-native';
 import { ShortDescriptionComponent } from '../../../../components/debateZone/shortDescription/shortDescriptionComponent';
 import { OutputDebateZoneListItem } from '../../../../types/debateZone';
-import { StreamComponent } from '../../../../components/debateZone/stream/streamComponent';
+import { MediaComponent } from '../../../../components/debateZone/media/mediaComponent';
 
 interface FeedDetailsComponentProps {
     debateZone: OutputDebateZoneListItem;
@@ -19,7 +19,7 @@ export const FeedDetailsComponent = (props: FeedDetailsComponentProps) => {
                 padding: 10,
             }}
         >
-            <StreamComponent />
+            <MediaComponent />
 
             <ShortDescriptionComponent
                 shortDescription={props?.debateZone?.shortDescription}
