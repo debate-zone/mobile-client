@@ -1,12 +1,11 @@
 import { Avatar, TextInput, Text, Button } from 'react-native-paper';
-import { View } from 'react-native';
+import {TouchableOpacity, View} from 'react-native';
 import { useEffect, useState } from 'react';
 import { AvatarImageSource } from 'react-native-paper/lib/typescript/src/components/Avatar/AvatarImage';
 import React from 'react';
-import TrueNotificationSvg from "../../../../src/components/svgIcons/truenotification";
 import IsNotificationSvg from "../../../../src/components/svgIcons/truenotification";
-import NotificationSvg from "../../../../src/components/svgIcons/falsenotification";
 import NoNotificationSvg from "../../../../src/components/svgIcons/falsenotification";
+import {useNavigation} from "@react-navigation/native";
 interface ProfileDetailsComponentProps {
     imgSource?: AvatarImageSource;
     name?: string;
@@ -18,11 +17,15 @@ interface ProfileDetailsComponentProps {
 
 export const ProfileDetailsComponent = (
     props: ProfileDetailsComponentProps,
-
 ) => {
     const [name, setName] = useState(props.name);
     const [image] = useState<AvatarImageSource | undefined>(props.imgSource);
     const [isEditingName, setIsEditingName] = useState(false);
+    const navigation = useNavigation<any>();
+    const navigateNotificationScreen = ()=>
+    {
+        navigation.navigate('NotificationScreen')
+    }
 
     useEffect(() => {
         setName(props.name);
@@ -92,8 +95,9 @@ export const ProfileDetailsComponent = (
                     Logout
                 </Button>
             </View>
-
-            {props.notificationIsRead ? <NoNotificationSvg/>  : <IsNotificationSvg/>}
+            <TouchableOpacity onPress={navigateNotificationScreen}>
+                {props.notificationIsRead ? <NoNotificationSvg/>  : <IsNotificationSvg/>}
+            </TouchableOpacity>
         </View>
     );
 };

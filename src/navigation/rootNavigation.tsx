@@ -15,6 +15,7 @@ import { JoinDetailsScreen } from '../screens/joinDetailsScreen/JoinDetailsScree
 import { getToken } from '../utils/loginUtils';
 import { ActiveScreen } from '../screens/activeScreen/activeScreen';
 import { FeedDetailsScreen } from '../screens/homeScreen/feed/feedDetailsScreen';
+import { NotificationScreen } from "../screens/notificationScreen/Notification";
 
 const Stack = createNativeStackNavigator();
 
@@ -96,6 +97,15 @@ export default function RootNavigation() {
                 <Stack.Screen
                     name={'JoinListScreen'}
                     component={JoinListScreen}
+                />
+                <Stack.Screen
+                    name={'NotificationScreen'}
+                    component={NotificationScreen}
+                    options={{
+                        headerTitle: "Notifications",
+                        headerBackVisible: true,
+                        headerShown: true,
+                    }}
                 />
                 <Stack.Screen
                     options={{
