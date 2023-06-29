@@ -7,8 +7,7 @@ import {
 } from '../../../types/debateZone';
 import { TimeComponent } from '../../../components/debateZone/time/timeComponent';
 import { ShortDescriptionComponent } from '../../../components/debateZone/shortDescription/shortDescriptionComponent';
-import { StreamComponent } from '../../../components/debateZone/stream/streamComponent';
-import CameraComponent from '../../../components/capture/camera/CameraComponent';
+import { MediaComponent } from '../../../components/debateZone/media/mediaComponent';
 import React, { useEffect, useState } from 'react';
 import { getUser } from '../../../utils/loginUtils';
 import { CommentListComponent } from '../../../components/debateZone/comments/commentListComponent';
@@ -122,7 +121,7 @@ export const ActiveComponent = ({
                     width: Dimensions.get('window').width,
                 }}
             >
-                {isUserActive ? <CameraComponent /> : <StreamComponent />}
+                <MediaComponent />
             </View>
 
             <View
@@ -195,7 +194,7 @@ export const ActiveComponent = ({
                         marginLeft: 15,
                     }}
                 >
-                    {!isUserActive ? <CameraComponent /> : <StreamComponent />}
+                    <MediaComponent />
                 </View>
                 <View
                     style={{

@@ -30,7 +30,7 @@ interface ProfileComponentProps {
     onJoinListItemPress: (id: string) => void;
     onCreateDebateZonePress: () => void;
     onJoinDebateZonePress: () => void;
-    notificationIsRead: boolean
+    notificationIsRead: boolean;
 }
 
 type SegmentButtonValue = 'chart' | 'joinedList' | 'myDebates';
@@ -65,7 +65,7 @@ export const ProfileComponent: React.FC<ProfileComponentProps> = ({
     onJoinListItemPress,
     onCreateDebateZonePress,
     onJoinDebateZonePress,
-    notificationIsRead
+    notificationIsRead,
 }) => {
     const [name, setName] = useState<string | undefined>();
     const [email, setEmail] = useState<string>();
@@ -98,7 +98,7 @@ export const ProfileComponent: React.FC<ProfileComponentProps> = ({
                 );
             case 'joinedList':
                 return (
-                    (joinedDebateZones.debateZones.length > 0 && (
+                    (joinedDebateZones?.debateZones?.length > 0 && (
                         <JoinList
                             outputDebateZoneList={joinedDebateZones}
                             onPress={onJoinListItemPress}

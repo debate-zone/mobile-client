@@ -5,6 +5,7 @@ import { request } from '../../apiClient/apiClient';
 import { CreatedDebateZone } from '../../types/debateZone';
 import { JoinDetailsComponent } from '../../components/debateZone/joinDetails/joinDetailsComponent';
 import { useEffect, useState } from 'react';
+import { ParticipantStatus } from '../../../../../common-library/src/debateZone/types';
 
 interface RootScreenProps {
     navigation: NativeStackNavigationProp<
@@ -25,12 +26,13 @@ export const JoinDetailsScreen = ({ navigation, route }: RootScreenProps) => {
         return debateZone;
     };
 
-    const joinDebateZone = async () => {
+    const joinDebateZone = async (participantStatus: ParticipantStatus) => {
         const debateZone = await request<CreatedDebateZone>(
             'POST',
             `/debate-zone/v1/debate-zones/join`,
             {
                 id: route.params.id,
+                participantStatus: participantStatus,
             },
         );
         return debateZone;

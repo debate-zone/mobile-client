@@ -27,10 +27,9 @@ export default function RootNavigation() {
 
     useEffect(() => {
         getToken().then(token => {
-            console.log('token', token);
             setTokenPresent(token !== null);
         });
-    }, [isTokenPresent]);
+    }, []);
 
     return (
         <NavigationContainer
