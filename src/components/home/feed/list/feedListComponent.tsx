@@ -10,6 +10,9 @@ export const FeedListComponent = (props: FeedListComponentProps) => {
     return (
         (props?.feedDebateZoneList?.debateZones?.length > 0 && (
             <FlatList
+                style={{
+                    paddingTop: Dimensions.get('window').height / 5,
+                }}
                 data={props?.feedDebateZoneList?.debateZones}
                 renderItem={value => {
                     return (

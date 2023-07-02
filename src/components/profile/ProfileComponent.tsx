@@ -117,7 +117,7 @@ export const ProfileComponent: React.FC<ProfileComponentProps> = ({
                 );
             case 'myDebates':
                 return (
-                    (myDebateZones.debateZones.length > 0 && (
+                    (myDebateZones && myDebateZones.debateZones.length > 0 && (
                         <JoinList
                             outputDebateZoneList={myDebateZones}
                             onPress={onJoinListItemPress}

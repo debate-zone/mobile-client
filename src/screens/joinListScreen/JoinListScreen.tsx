@@ -57,6 +57,6 @@ const styles = StyleSheet.create({
         backgroundColor: '#A9BBE2',
         width: '100%',
         paddingTop: 20,
-        height: "100%",
+        height: '100%',
     },
 });

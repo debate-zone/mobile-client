@@ -2,8 +2,8 @@
   "expo": {
     "owner": "debate-zone",
     "scheme": ["debatezone", "fb563289419313369"],
-    "name": "mobile-client",
-    "slug": "mobile-client",
+    "name": "Debate Zone",
+    "slug": "debate-zone",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -73,7 +73,7 @@
     ],
     "extra": {
       "eas": {
-        "projectId": "3a0fa319-e569-4719-a97d-7477874a1e6a"
+        "projectId": "3fab277f-4ada-411b-9c36-a09f71885d44"
       }
     }
   }

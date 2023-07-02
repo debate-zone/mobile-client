@@ -167,35 +167,6 @@ export const NewDebateZoneComponent: React.FC<NewDebateZoneComponentProps> = ({
         ]);
     };
 
-    useEffect(() => {
-        handleLoadUnSubmittedData()
-            .then(() => {
-                console.log(
-                    'NewDebateZoneComponent: handleLoadUnSubmittedData',
-                );
-            })
-            .catch((error: CustomError) => {
-                console.log(
-                    'NewDebateZoneComponent: handleLoadUnSubmittedData: error: ',
-                    error,
-                );
-            });
-        return () => {
-            handleSaveUnSubmittedData()
-                .then(() => {
-                    console.log(
-                        'NewDebateZoneComponent: handleSaveUnSubmittedData',
-                    );
-                })
-                .catch((error: CustomError) => {
-                    console.log(
-                        'NewDebateZoneComponent: handleSaveUnSubmittedData: error: ',
-                        error,
-                    );
-                });
-        };
-    }, []);
-
     return (
         <ScrollView
             style={{

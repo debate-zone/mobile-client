@@ -4,7 +4,7 @@ import { RootStackParamList } from '../../types';
 import { HomeTabComponent } from '../../components/home/homeTab/homeTabComponent';
 import { useEffect, useState } from 'react';
 import { OutputDebateZoneList } from '../../types/debateZone';
-import { LiveListComponent } from '../../components/home/liveList/liveListComponent';
+import { LiveListComponent } from '../../components/home/live/liveListComponent';
 import { request } from '../../apiClient/apiClient';
 import { FeedListComponent } from '../../components/home/feed/list/feedListComponent';
 
