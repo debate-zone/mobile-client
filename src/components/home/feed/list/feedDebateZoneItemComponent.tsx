@@ -1,7 +1,6 @@
 import { OutputDebateZoneListItem } from '../../../../types/debateZone';
 import { View, Pressable } from 'react-native';
 import { ShortDescriptionComponent } from '../../../debateZone/shortDescription/shortDescriptionComponent';
-import { MediaComponent } from '../../../debateZone/media/mediaComponent';
 
 interface FeedDebateZoneItemComponentProps {
     feedDebateZoneItem: OutputDebateZoneListItem;
@@ -44,7 +43,7 @@ export const FeedDebateZoneItemComponent = (
                         height: '100%',
                     }}
                 >
-                    <MediaComponent />
+                    {/* todo short media */}
                 </View>
             </View>
         </Pressable>

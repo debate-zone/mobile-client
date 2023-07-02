@@ -1,8 +1,8 @@
-import {Notification} from "expo-notifications";
+import { Notification } from 'expo-notifications';
 
 export type CreatedParticipant = {
     userId: string;
-    role: string;
+    role: Role;
     status: ParticipantStatus;
 };
 
@@ -71,9 +71,9 @@ export enum Role {
 }
 
 export enum NotificationType {
-    Invited = "invited",
-    Joined = "joined",
-    Left = "left"
+    Invited = 'invited',
+    Joined = 'joined',
+    Left = 'left',
 }
 
 export type OutputDebateZoneListItem = {
@@ -126,18 +126,19 @@ export type IsReadNotification = {
 };
 
 export type OutputNotification = {
-    _id: string
-    producerUserId: string,
-    consumerUserId: string,
+    _id: string;
+    producerUserId: string;
+    consumerUserId: string;
     data: {
-        producerFullName: string,
-        debateZoneId: string,
-        debateZoneTitle: string
-    }
-    isRead: boolean
-    type: NotificationType
-}
+        producerFullName: string;
+        debateZoneId: string;
+        debateZoneTitle: string;
+    };
+    isRead: boolean;
+    type: NotificationType;
+    entityId: string;
+};
 
 export type OutputNotificationList = {
-    notifications: OutputNotification[]
-}
+    notifications: OutputNotification[];
+};

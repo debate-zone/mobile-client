@@ -1,5 +1,5 @@
 import { NativeStackNavigationProp } from 'react-native-screens/native-stack';
-import { RootStackParamList } from '@/types';
+import { RootStackParamList } from '../../types';
 import { StyleSheet, TouchableOpacity, View, Text } from 'react-native';
 import { request } from '../../apiClient/apiClient';
 import {
@@ -56,7 +56,7 @@ export const NotificationScreen = ({ navigation }: RootScreenProps) => {
     ) => {
         markAsReadNotification(outputNotificationItem._id);
         navigation.navigate('JoinDetailsScreen', {
-            id: outputNotificationItem.data.debateZoneId,
+            id: outputNotificationItem.entityId,
         });
     };
 
